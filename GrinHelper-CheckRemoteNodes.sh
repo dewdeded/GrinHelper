@@ -1,14 +1,15 @@
 #!/bin/bash
 
-### Deps
-# Needs GrinHelper ( https://github.com/dewdeded/grin on remote node)
+#### Deps ####
+# Needs GrinHelper ( https://github.com/dewdeded/GrinHelper on remote node)
 
-### Configuration
-configfile="`pwd`/GrinHelper-NodeList.conf"
-source "$configfile"
+#### Configuration ####
+ConfigFile="`pwd`/GrinHelper-NodeList.conf"
+UpdateURL="http://grin.bz/grinhelper.sh"
 
+#### Begin main script ####
+source "$ConfigFile"
 
-### Begin main script
 
 # Function Check Stats
 option_1()
@@ -72,7 +73,7 @@ clear
 for host in "${hosts[@]}"; do
     IFS=":" names=( $host )
     echo -e "\nUpdating Grinhelper at Hostname: ${names[2]} (IP: ${names[1]})\n"
-    ssh ${names[1]} "wget -q http://grin.bz/grinhelper.sh -O /bin/grinhelper; chmod +x /bin/grinhelper"
+    ssh ${names[1]} "wget -q $UpdateURL -O /bin/grinhelper; chmod +x /bin/grinhelper"
     echo "Finished updating Grinhelper at ${names[2]}"
     
 done
