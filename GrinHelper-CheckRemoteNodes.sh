@@ -99,7 +99,7 @@ do
     
     echo " "
     echo -e "Please select an option to be executed on all your grin nodes:\n"
-    echo "1) Check Stats"
+    echo "1) Check Sync & Mining Stats"
     echo "2) Check Outputs"
     echo "3) Check Balance"
     echo ""

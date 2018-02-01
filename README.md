@@ -11,14 +11,14 @@
 6) Grin Regular Node (non-mining) - Check logfiles
 7) View balance
 8) Show outputs
-9) Check Grin
-10) Stats Grin & network
-11) Killall Grin
+9) Check Grin processes
+10) Check sync & mining stats
+11) Killall Grin processes
 12) Update Grindhelper
 
 ## Script 2 - CheckGrinNodes.sh - Instance Watchdog for Grin Remote Nodes
 **Functions**
-1) Check Stats (at all remote nodes)
+1) Check Sync & Mining Stats (at all remote nodes)
 2) Check Outputs (at all remote nodes)
 3) Check Balance (at all remote nodes)
-4) Update Grinhelper (at all remote nodes)
+4) Update Grinhelper (on all remote nodes)
