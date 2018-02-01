@@ -32,10 +32,10 @@ e) Exit
 ==========================================================================
 Please select an option to be executed on all your grin nodes:
 
-1) Check Stats
-2) Check Outputs
-3) Check Balance
+*) Check Stats
+*) Check Outputs
+*) Check Balance
 
-u) Update Grinhelper
-e) Exit
+*) Update Grinhelper
+*) Exit
 ==========================================================================
