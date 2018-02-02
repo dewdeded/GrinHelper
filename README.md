@@ -47,3 +47,5 @@ Based on a clean Ubuntu 16.04 LTS minimal install (other Ubuntu and Debian shoul
 - Check Outputs (at all remote nodes)
 - Check Balance (at all remote nodes)
 - Update Grinhelper (on all remote nodes)
+
+[![asciicast](https://asciinema.org/a/tNSrjbW66g8ph043lKT7jxqdE.png)](https://asciinema.org/a/tNSrjbW66g8ph043lKT7jxqdE)
