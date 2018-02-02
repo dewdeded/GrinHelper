@@ -96,10 +96,10 @@ fi
 while :
 do
     clear
-	figlet Check Grin Nodes
-    
-    echo " "
-    echo -e "Please select an option to be executed on all your grin nodes:\n"
+	echo "=========================================================================="
+    figlet G H   Check 
+    figlet Remote Nodes
+    echo -e "All functions, will be executed on all your Grin nodes."
     echo "1) Check Sync & Mining Stats"
     echo "2) Check Outputs"
     echo "3) Check Balance"
@@ -107,8 +107,9 @@ do
     echo "u) Update Grinhelper"
     echo "e) Exit"
     echo "=========================================================================="
-	
-	read m_menu
+	echo ""
+    echo "Please select an option: " 
+    read m_menu
 	
 	case "$m_menu" in
 	
