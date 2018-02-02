@@ -16,7 +16,7 @@
 11) Killall Grin processes
 12) Update Grindhelper
 
-## Script 2 - CheckGrinNodes.sh - Instance Watchdog for Grin Remote Nodes
+## Script 2 - GrinHelper-CheckRemoteNodes.sh - Instance Watchdog for Grin Remote Nodes
 **Functions**
 1) Check Sync & Mining Stats (at all remote nodes)
 2) Check Outputs (at all remote nodes)
