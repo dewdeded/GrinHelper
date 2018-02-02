@@ -40,7 +40,7 @@ clear
 for host in "${hosts[@]}"; do
     IFS=":" names=( $host )
     echo -e "\nHostname: ${names[2]} (IP: ${names[1]})\n"
-    cmd="export PATH=\"$BaseDir/grin/target/debug:/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\" ; cd $BaseDir/grin/node1; grin wallet -p password outputs"
+    cmd="export PATH=\"$BaseDir/grin/target/debug:$RustDir/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\" ; cd $BaseDir/grin/node1; grin wallet -p password outputs"
     ssh -o LogLevel=QUIET ${names[1]} -t "$cmd"
 done
 
@@ -56,7 +56,8 @@ clear
 for host in "${hosts[@]}"; do
     IFS=":" names=( $host )
     echo -e "\nHostname: ${names[2]} (IP: ${names[1]})\n"
-    balance=$(ssh -o LogLevel=QUIET ${names[1]} -t "export PATH="/root/.cargo/bin:$HOME/.cargo/bin:$BaseDir/grin/target/debug:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"; pushd "$BaseDir/grin/node1" > /dev/null ; grin wallet -p password info|grep Spend" | awk '{print $4}')
+    cmd="export PATH=\"$BaseDir/grin/target/debug:$RustDir/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\"; pushd "$BaseDir/grin/node1" > /dev/null ; grin wallet -p password info|grep Spend"
+    balance=$(ssh -o LogLevel=QUIET ${names[1]} -t "$cmd" | awk '{print $4}')
     echo "${names[2]} has $balance"
 done
 
