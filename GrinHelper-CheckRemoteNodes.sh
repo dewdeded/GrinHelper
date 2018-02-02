@@ -5,7 +5,9 @@
 
 #### Configuration ####
 ConfigFile="`pwd`/GrinHelper-NodeList.conf"
-UpdateURL="http://grin.bz/grinhelper.sh"
+UpdateURL="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh"
+BaseDir="/root/mw"
+RustDir="~/.cargo/bin"
 
 #### Begin main script ####
 source "$ConfigFile"
@@ -38,12 +40,8 @@ clear
 for host in "${hosts[@]}"; do
     IFS=":" names=( $host )
     echo -e "\nHostname: ${names[2]} (IP: ${names[1]})\n"
-    ssh -t -t ${names[1]} << EOF
-    cd /root/mw/grin/node1/ 
-    grin wallet -p password outputs
-    exit 
-EOF
-    
+    cmd="export PATH=\"$BaseDir/grin/target/debug:/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\" ; cd $BaseDir/grin/node1; grin wallet -p password outputs"
+    ssh -o LogLevel=QUIET ${names[1]} -t "$cmd"
 done
 
 echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
@@ -58,7 +56,7 @@ clear
 for host in "${hosts[@]}"; do
     IFS=":" names=( $host )
     echo -e "\nHostname: ${names[2]} (IP: ${names[1]})\n"
-    balance=$(ssh -o LogLevel=QUIET ${names[1]} -t "export PATH="/root/.cargo/bin:/root/mw/grin/target/debug:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"; pushd "/root/mw/grin/node1" > /dev/null ; grin wallet -p password info|grep Spend" | awk '{print $4}')
+    balance=$(ssh -o LogLevel=QUIET ${names[1]} -t "export PATH="/root/.cargo/bin:$HOME/.cargo/bin:$BaseDir/grin/target/debug:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"; pushd "$BaseDir/grin/node1" > /dev/null ; grin wallet -p password info|grep Spend" | awk '{print $4}')
     echo "${names[2]} has $balance"
 done
 
