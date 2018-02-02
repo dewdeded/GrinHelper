@@ -1,15 +1,19 @@
 #!/bin/bash
 
 #### Direct Download ####
-# wget http://grin.bz/grinhelper.sh -O /bin/grinhelper; chmod +x /bin/grinhelper
+# wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O /bin/grinhelper; chmod +x /bin/grinhelper
 
 #### Configuration ####
 # Setup path to Grin server logfile
-PathGrinLogFile=/root/mw/grin/server/grin.log
+PathGrinLogFile=$HOME/mw/grin/server/grin.log
 # Max logfile size
 MaxLogSize=100M
 
-## Rust installer function
+
+#############################################################
+
+#### Function definition ####
+## Installer Rust  
 rust_installer()
 {
 export TERM=xterm
@@ -18,10 +22,10 @@ sudo apt-get install build-essential curl cmake figlet jq -y
 	
 curl https://sh.rustup.rs -sSf | sh
 source $HOME/.cargo/env
-echo source $HOME/.cargo/env >> /root/.bashrc 
+echo source $HOME/.cargo/env >> $HOME/.bashrc 
 }
 
-## Clang installer function
+## Installer Clang
 clang_installer()
 {
 export TERM=xterm
@@ -31,7 +35,7 @@ dpkg-reconfigure locales
 sudo apt-get install clang-3.8 -y
 }
 
-##Grin installer function
+## Installer Grin
 main_installer()
 {
 while true; do
@@ -43,7 +47,7 @@ while true; do
     	esac
 done
 sudo apt-get install git psmisc -y
-echo export PATH=/root/mw/grin/target/debug:$PATH >> /root/.bashrc
+echo export PATH=$HOME/mw/grin/target/debug:$PATH >> $HOME/.bashrc
 cd $HOME
 mkdir mw/
 cd mw
@@ -58,7 +62,7 @@ cp grin.toml server/
 main_menu
 }
 
-##Start node function
+## Starter Wallet Node
 my_wallet()
 {
 cd $HOME/mw/grin/node1
@@ -74,24 +78,23 @@ else
 fi
 }
 
-##Start server function
+## Starter Mining Server
 my_mining_server()
 {
-cd /root/mw/grin/server  
-export PATH=/root/mw/grin/target/debug/:$PATH 
+cd $HOME/mw/grin/server  
+export PATH=$HOME/mw/grin/target/debug/:$PATH 
 grin server -m run
 }
 
-##Start server function
+## Starter Nonmining Server
 my_nonmining_server()
 {
-cd /root/mw/grin/server  
-export PATH=/root/mw/grin/target/debug/:$PATH 
+cd $HOME/mw/grin/server  
+export PATH=$HOME/mw/grin/target/debug/:$PATH 
 grin server run
 }
 
-
-##Start spend balance function
+## Show Spend Balances
 my_spendbalance()
 {
 cd $HOME/mw/grin/node1
@@ -109,7 +112,7 @@ else
 fi
 }
 
-##Start output function
+## Show Outputs
 my_outputs()
 {
 cd $HOME/mw/grin/node1
@@ -127,7 +130,7 @@ else
 fi
 }
 
-##Start the main part of the application menu if Grin and prerequisites are installed
+## Start the main part of the application menu if Grin and prerequisites are installed
 main_menu()
 {
 
@@ -192,7 +195,7 @@ option_1()
 
 option_l1()
 {
-    tail -f /root/mw/grin/node1/grin.log
+    tail -f $HOME/mw/grin/node1/grin.log
 	echo "Press ENTER To Return"
     read continue
 	main_menu
@@ -254,7 +257,7 @@ option_c()
 	if ps aux | grep -q "[m]y_mining_server" ; then echo "Mining server is running" ; else echo "Mining server is NOT running" ; fi
 	if ps aux | grep -q "[m]y_nonmining_server" ; then echo "Non mining server is running" ; else echo "Non mining server is NOT running" ; fi
 	echo " "
-	LogFileSize=`ls -lh /root/mw/grin/server/grin.log |awk '{print $5}'`
+	LogFileSize=`ls -lh $HOME/mw/grin/server/grin.log |awk '{print $5}'`
 	echo "Size Logfile: $LogFileSize"
 	echo " "
 	echo "Press ENTER To Return"
@@ -307,7 +310,7 @@ option_9()
 option_u()
 {
 	echo "Updating"
-	wget -q http://grin.bz/grinhelper.sh -O /bin/grinhelper
+	wget -q https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O /bin/grinhelper
 	chmod +x /bin/grinhelper
 	clear
 	echo "Grinhelper update successful"
@@ -321,7 +324,7 @@ option_u()
 
 ###########################
 
-# trap ctrl-c and call ctrl_c()
+# trap ctrl-c and call ctrl_c() for quitting log file vieewing
 trap ctrl_c INT
 
 function ctrl_c() {
@@ -354,7 +357,7 @@ then
 	echo "Local height:			$(curl -s http://127.0.0.1:13413/v1/chain | jq .height)"
 	echo "Local difficulty:		$(curl -s http://127.0.0.1:13413/v1/chain | jq .total_difficulty)"
 	echo "Graphs per second:		$(grep Graphs $PathGrinLogFile|tail -n 1| awk ' { print $19 } ' )"
-	LogFileSize=`ls -lh /root/mw/grin/server/grin.log |awk '{print $5}'`
+	LogFileSize=`ls -lh $HOME/mw/grin/server/grin.log |awk '{print $5}'`
 	echo "Size Logfile:			$LogFileSize"
 	
 	if ps aux | grep -q "[m]y_wallet" ; then echo "Wallet is running" ; else echo "Wallet is NOT running" ; fi
@@ -393,7 +396,7 @@ else
     rust_installer
 	clear
 	echo Rust installed
-	source /root/.cargo/env
+	source $HOME/.cargo/env
 	exit 0
 fi
 
@@ -401,7 +404,7 @@ fi
 if [ -d "$HOME/mw/grin/" ];
 then
 
-## Fix Logfile size
+## Autofix Logfile size
 find "$PathGrinLogFile" -size +$MaxLogSize -delete
 if [ ! -f $PathGrinLogFile ]; then
     killall -9 grin
