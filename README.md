@@ -17,6 +17,7 @@
 12) Update Grindhelper
 
 ## Script 2 - GrinHelper-CheckRemoteNodes.sh - Instance Watchdog for Grin Remote Nodes
+[![asciicast](https://asciinema.org/a/tNSrjbW66g8ph043lKT7jxqdE.png)](https://asciinema.org/a/tNSrjbW66g8ph043lKT7jxqdE)
 **Functions**
 1) Check Sync & Mining Stats (at all remote nodes)
 2) Check Outputs (at all remote nodes)
