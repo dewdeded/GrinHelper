@@ -1,20 +1,24 @@
 # Grinhelper Suite - BASH Script Repository
 
 ## Setup Instructions
-
 Based on a clean Ubuntu 16.04 LTS minimal install (other Ubuntu and Debian should work too)
+
+*** todo ***
+```bash
+wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O /bin/grinhelper; chmod +x /bin/grinhelper
+```
+*** todo ***
 
 ## Script: GrinHelper.sh - Manage Local Grin Node
 
-### Features
+### Functions
+
+#### Auto setup
 
 - Install Grin depencies: Clang-3.8, Rust
 - Install its own depencies: figlet, screen, jq
 - Install Grin
 - Autofix logfile size
-- Everything listed under functions
-
-### Functions
 
 #### Launcher and corresponding logviewer
 
