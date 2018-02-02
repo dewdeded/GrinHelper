@@ -1,21 +1,26 @@
 # GrinHelper Suite - BASH Script Repository
 
-## Setup Instructions
-Based on a clean Ubuntu 16.04 LTS minimal install (other Ubuntu and Debian should work too)
+## Installation Instructions
 
-*** todo ***
+1. Get yourself a clean Ubuntu or Debian (tested working on Ubuntu 16.04 LTS minimal)
+2. Run these commands
+
 ```bash
-wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O /bin/grinhelper; chmod +x /bin/grinhelper
+wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O ./grinhelper
+sudo (mv ./grinhelper /bin/ && chmod +x /bin/grinhelper) # needs root for /bin; or if you prefer /usr/bin or ~/bin/ perhaps
 ```
-*** todo ***
 
-## Script: GrinHelper.sh - Manage Local Grin Node
+## GrinHelper.sh
 
-### Functions
+This bash script manages your local grin node.
 
-#### Auto setup
+### Features
 
-- Install Grin depencies: Clang-3.8, Rust
+This is what this script will do for you.
+
+#### Automatic setup
+
+- Install Grin depencies: Clang-3.8, Rust 1.21, rustup
 - Install its own depencies: figlet, screen, jq
 - Install Grin
 - Autofix logfile size
@@ -29,7 +34,7 @@ wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh 
 - Start detached Grin Regular Server (non-mining)
 - Check logfiles of Grin Regular Server (non-mining)
 
-#### Funds and Transfers
+#### Show Funds and Transfers
 
 - View balance of local Grin wallet
 - Show outputs of local Grin wallet
@@ -42,7 +47,7 @@ wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh 
 - Update Grindhelper
 
 ## Script: GrinHelper-CheckRemoteNodes.sh
-**Manage, monitor and aggregate infos from remote Grin nodes**
+**Manage, monitor and aggregate status info from remote Grin nodes**
 
 ### Functions
 
