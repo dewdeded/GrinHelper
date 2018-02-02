@@ -38,8 +38,7 @@ Based on a clean Ubuntu 16.04 LTS minimal install (other Ubuntu and Debian shoul
 - Update Grindhelper
 
 ## Script: GrinHelper-CheckRemoteNodes.sh
-
-## Manage, monitor and aggregate infos from remote Grin nodes
+**Manage, monitor and aggregate infos from remote Grin nodes**
 
 ### Functions
 
