@@ -15,17 +15,18 @@ source "$ConfigFile"
 option_1()
 {
 clear  
-echo "Network height:			$(curl -s https://grintest.net/v1/chain | jq .height)"
-	
+echo -e "\033[0;33mNetwork height:			$(curl -s https://grintest.net/v1/chain | jq .height)\033[0m" 
+echo -e "\033[0;33mNetwork difficulty:		$(curl -s https://grintest.net/v1/chain | jq .total_difficulty)\033[0m"
+
 for host in "${hosts[@]}"; do
     IFS=":" names=( $host )
-    echo -e "\nHostname: ${names[2]} (IP: ${names[1]})\n"
+    echo -e "\033[0;34m\nHostname: ${names[2]} (IP: ${names[1]})\n\033[0m\n"
     
     ssh ${names[1]} /bin/grinhelper remote_stats
 
 done
 echo ""
-echo -e "\nPress ENTER To Return"
+echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
 read continue
 }
 
@@ -45,7 +46,7 @@ EOF
     
 done
 
-echo -e "\nPress ENTER To Return"
+echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
 read continue
 }
 
@@ -61,7 +62,7 @@ for host in "${hosts[@]}"; do
     echo "${names[2]} has $balance"
 done
 
-echo -e "\nPress ENTER To Return"
+echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
 read continue
 }
 
@@ -78,7 +79,7 @@ for host in "${hosts[@]}"; do
     
 done
 
-echo -e "\nPress ENTER To Return"
+echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
 read continue
 }
 

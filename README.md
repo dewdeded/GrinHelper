@@ -1,24 +1,49 @@
-# Grin Script Repository
+# Grinhelper Suite - BASH Script Repository
 
-## Script 1 - GrinHelper.sh - Manage Local Grin Node
+## Setup Instructions
 
-**Functions**
-1) Grin Wallet Server - Start detached
-2) Grin Wallet Server - Check logfiles
-3) Grin Mining Node - Start detached
-4) Grin Mining Node - Check logfiles
-5) Grin Regular Node (non-mining) - Start detached
-6) Grin Regular Node (non-mining) - Check logfiles
-7) View balance
-8) Show outputs
-9) Check Grin processes
-10) Check sync & mining stats
-11) Killall Grin processes
-12) Update Grindhelper
+Based on a clean Ubuntu 16.04 LTS minimal install (other Ubuntu and Debian should work too)
 
-## Script 2 - CheckGrinNodes.sh - Instance Watchdog for Grin Remote Nodes
-**Functions**
-1) Check Sync & Mining Stats (at all remote nodes)
-2) Check Outputs (at all remote nodes)
-3) Check Balance (at all remote nodes)
-4) Update Grinhelper (on all remote nodes)
+## Script: GrinHelper.sh - Manage Local Grin Node
+
+### Features
+
+- Install Grin depencies: Clang-3.8, Rust
+- Install its own depencies: figlet, screen, jq
+- Install Grin
+- Autofix logfile size
+- Everything listed under functions
+
+### Functions
+
+#### Launcher and corresponding logviewer
+
+- Start detached Grin Wallet Node
+- Check logfiles of Grin Wallet Node
+- Start detached Grin Mining Server
+- Check logfiles of Grin Mining Server
+- Start detached Grin Regular Server (non-mining)
+- Check logfiles of Grin Regular Server (non-mining)
+
+#### Funds and Transfers
+
+- View balance of local Grin wallet
+- Show outputs of local Grin wallet
+
+#### Monitoring and Operations
+
+- Check which Grin processes are running
+- Show sync & mining stats
+- Killall Grin processes
+- Update Grindhelper
+
+## Script: GrinHelper-CheckRemoteNodes.sh
+
+## Manage, monitor and aggregate infos from remote Grin nodes
+
+### Functions
+
+- Check Sync & Mining Stats (at all remote nodes)
+- Check Outputs (at all remote nodes)
+- Check Balance (at all remote nodes)
+- Update Grinhelper (on all remote nodes)
