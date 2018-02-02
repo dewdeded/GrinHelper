@@ -1,4 +1,4 @@
-# Grinhelper Suite - BASH Script Repository
+# GrinHelper Suite - BASH Script Repository
 
 ## Setup Instructions
 Based on a clean Ubuntu 16.04 LTS minimal install (other Ubuntu and Debian should work too)
