@@ -87,8 +87,8 @@ fi
 while :; do
 	clear
 	echo "=========================================================================="
-	figlet G H Check
-	figlet Remote Nodes
+	figlet -f small -f small GrinHelper Suite
+	figlet -f small -f small Check Remote Nodes
 	echo -e "All functions, will be executed on all your Grin nodes."
 	echo "1) Check Sync & Mining Stats"
 	echo "2) Check Outputs"
