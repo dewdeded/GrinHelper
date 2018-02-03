@@ -404,7 +404,7 @@ fi
 
 ## Check if CLI argument passed to view remote stats
 if [ "$1" == "remote_stats" ]; then
-	remote_stats
+	echo remote_stats
 	exit 1
 fi
 
