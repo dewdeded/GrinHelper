@@ -1,6 +1,6 @@
 # GrinHelper Suite - BASH Script Repository
-Grin is an in-progress implementation of the MimbleWimble protocol. To learn more, read the introduction to MimbleWimble and Grin.
 
+Grin is an in-progress implementation of the MimbleWimble protocol. To learn more, read the [introduction to MimbleWimble and Grin](https://github.com/mimblewimble/grin/blob/master/doc/intro.md).
 
 ## Installation Instructions
 
