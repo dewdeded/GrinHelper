@@ -132,7 +132,8 @@ term_setup() {
 main_menu() {
 	while :; do
 		clear
-		figlet -f small GrinHelper $host
+		figlet -f small "GrinHelper Suite";
+		figlet -f small "$host"
 
 		echo " "
 		echo -e "Please select an option\n"
