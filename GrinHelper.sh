@@ -132,7 +132,7 @@ term_setup() {
 main_menu() {
 	while :; do
 		clear
-		figlet GrinHelper $host
+		figlet -f small GrinHelper $host
 
 		echo " "
 		echo -e "Please select an option\n"
@@ -343,9 +343,9 @@ remote_stats() {
 #############################################################
 
 # Test and install script deps
-which sudo figlet jq screen curl >/dev/null 2>&1 || {
+which sudo figlet -f small jq screen curl >/dev/null 2>&1 || {
 	apt-get update -y
-	apt-get install -y sudo figlet jq screen curl
+	apt-get install -y sudo figlet -f small jq screen curl
 }
 
 ## Check if Clang is installed
