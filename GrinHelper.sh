@@ -28,7 +28,7 @@ clang_installer() {
 	export TERM=xterm
 	sudo apt-get update -y
 	sudo apt-get install dialog psmisc -y
-	dpkg-reconfigure locales
+	sudo dpkg-reconfigure locales
 	sudo apt-get install clang-3.8 -y
 }
 
@@ -344,9 +344,14 @@ remote_stats() {
 #############################################################
 
 # Test and install script deps
-which sudo figlet jq screen curl >/dev/null 2>&1 || {
+which sudo  >/dev/null 2>&1 || {
 	apt-get update -y
-	apt-get install -y sudo figlet jq screen curl
+	apt-get install -y sudo
+}
+
+which sudo figlet jq screen curl >/dev/null 2>&1 || {
+	sudo apt-get update -y
+	sudo apt-get install -y figlet jq screen curl
 }
 
 ## Check if Clang is installed
