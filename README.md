@@ -7,7 +7,8 @@
 
 ```bash
 wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O ./grinhelper
-sudo (mv ./grinhelper /bin/ && chmod +x /bin/grinhelper) # needs root for /bin; or if you prefer /usr/bin or ~/bin/ perhaps
+chmod +x /bin/grinhelper
+sudo mv ./grinhelper /bin/ # needs root for /bin; or if you prefer /usr/bin or ~/bin/ perhaps
 ```
 
 ## GrinHelper.sh
