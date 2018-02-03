@@ -359,7 +359,7 @@ else
 fi
 
 ## Check if Rust is installed
-if [ ! -f $HOME/.cargo/env ]; then
+if [ ! $HOME/.cargo/env ]; then
 	source $HOME/.cargo/env
 fi
 
