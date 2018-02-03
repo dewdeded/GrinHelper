@@ -47,16 +47,17 @@ This is what this script will do for you.
 - Check which Grin processes are running
 - Show sync & mining stats
 - Killall Grin processes
-- Update Grindhelper
+- Update GrindHelper
 
-## Script: GrinHelper-CheckRemoteNodes.sh
-**Manage, monitor and aggregate status info from remote Grin nodes**
+## GrinHelper-CheckRemoteNodes.sh
+
+This script manages, monitors and aggregate status info from remote Grin nodes.
 
 ### Functions
 
 - Check Sync & Mining Stats (at all remote nodes)
 - Check Outputs (at all remote nodes)
 - Check Balance (at all remote nodes)
-- Update Grinhelper (on all remote nodes)
+- Update GrinHelper (on all remote nodes)
 
 [![asciicast](https://asciinema.org/a/tNSrjbW66g8ph043lKT7jxqdE.png)](https://asciinema.org/a/tNSrjbW66g8ph043lKT7jxqdE)
