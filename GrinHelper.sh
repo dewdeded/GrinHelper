@@ -122,7 +122,7 @@ my_outputs() {
 
 term_setup() {
 	if [ ! -f /etc/hostname ]; then
-	hostname -a >/etc/hostname
+		hostname -a >/etc/hostname
 	fi
 	host=$(cat /etc/hostname)
 	export TERM=xterm
@@ -303,28 +303,27 @@ option_u() {
 	exit 0
 }
 
-
 ##### Autofix Logfile size
 autofix_logfilesize() {
-# Delete to big logfile
-find "$PathGrinLogFile" -size +$MaxLogSize -delete
+	# Delete to big logfile
+	find "$PathGrinLogFile" -size +$MaxLogSize -delete
 
-# Restart Grin services
-if [ ! -f $PathGrinLogFile ]; then
-	if ps aux | grep -q "[m]y_wallet"; then
-		screen -S grinnode -X quit
-		option_1
+	# Restart Grin services
+	if [ ! -f $PathGrinLogFile ]; then
+		if ps aux | grep -q "[m]y_wallet"; then
+			screen -S grinnode -X quit
+			option_1
+		fi
+		if ps aux | grep -q "[m]y_mining_server"; then
+			screen -S grinserver -X quit
+			option_2
+		fi
+		if ps aux | grep -q "[m]y_nonmining_server"; then
+			screen -S grinserver -X quit
+			option_3
+		fi
+		screen -wipe
 	fi
-	if ps aux | grep -q "[m]y_mining_server"; then
-		screen -S grinserver -X quit
-		option_2
-	fi
-	if ps aux | grep -q "[m]y_nonmining_server"; then
-		screen -S grinserver -X quit
-		option_3
-	fi
-	screen -wipe
-fi
 }
 
 remote_stats() {
@@ -360,6 +359,10 @@ else
 fi
 
 ## Check if Rust is installed
+if [ ! -f $HOME/.cargo/env ]; then
+	source $HOME/.cargo/env
+fi
+
 if type -p rustc >/dev/null; then
 	:
 else
@@ -404,7 +407,6 @@ if [ "$1" == "remote_stats" ]; then
 	remote_stats
 	exit 1
 fi
-
 
 autofix_logfilesize
 term_setup
