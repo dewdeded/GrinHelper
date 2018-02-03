@@ -374,7 +374,7 @@ else
 fi
 
 ## Check if Grin is installed
-if [ -d "$HOME/mw/grin/" ]; then
+if [ ! -d "$HOME/mw/grin/" ]; then
 	main_installer
 fi
 
