@@ -9,7 +9,7 @@ Grin is an in-progress implementation of the MimbleWimble protocol. To learn mor
 
 ```bash
 wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O ./grinhelper
-chmod +x /bin/grinhelper
+chmod +x ./grinhelper
 sudo mv ./grinhelper /bin/ # needs root for /bin or if you prefer /usr/bin or ~/bin/ perhaps
 ```
 
