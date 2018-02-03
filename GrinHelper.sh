@@ -343,9 +343,9 @@ remote_stats() {
 #############################################################
 
 # Test and install script deps
-which sudo figlet -f small jq screen curl >/dev/null 2>&1 || {
+which sudo figlet small jq screen curl >/dev/null 2>&1 || {
 	apt-get update -y
-	apt-get install -y sudo figlet -f small jq screen curl
+	apt-get install -y sudo figlet small jq screen curl
 }
 
 ## Check if Clang is installed
