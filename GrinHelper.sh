@@ -205,8 +205,8 @@ main_menu() {
 		4) option_4 ;;
 		5) option_5 ;;
 		6) option_6 ;;
-		c) option_c1 ;;
-		c) option_c2 ;;
+		c1) option_c1 ;;
+		c2) option_c2 ;;
 		s) option_s ;;
 		k) option_k ;;
 		kw) option_kw ;;
