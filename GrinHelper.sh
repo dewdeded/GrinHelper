@@ -94,6 +94,7 @@ my_mining_server() {
 	cd $HOME/mw/grin/server
 	sed -i '/chain_type/c\chain_type = "Testnet1"' grin.toml
 	sed -i '/db_root/c\db_root = ".grin"' grin.toml
+	echo "Starting Testnet1 Mining Node" > grin.log
 	export PATH=$HOME/mw/grin/target/debug/:$PATH
 	grin server -m run
 }
@@ -104,6 +105,7 @@ my_mining_server_testnet2() {
 	cd $HOME/mw/grin/server
 	sed -i '/chain_type/c\chain_type = "Testnet2"' grin.toml
 	sed -i '/db_root/c\db_root = ".grin-testnet"' grin.toml
+	echo "Starting Testnet2 Mining Node" > grin.log
 	export PATH=$HOME/mw/grin/target/debug/:$PATH
 	grin server -m run
 }
@@ -114,6 +116,7 @@ my_nonmining_server() {
 	cd $HOME/mw/grin/server
 	sed -i '/chain_type/c\chain_type = "Testnet1"' grin.toml
 	sed -i '/db_root/c\db_root = ".grin"' grin.toml
+	echo "Starting Testnet1 Non-Mining Node" > grin.log
 	export PATH=$HOME/mw/grin/target/debug/:$PATH
 	grin server run
 }
