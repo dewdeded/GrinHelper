@@ -169,7 +169,8 @@ main_menu() {
 		echo "kw) Kill Grin Wallet"
 		echo "ks) Kill Grin Node"
 		echo " "
-		echo "u) Update Grindhelper"
+		echo "u1) Update Grin (to latest version in branch: master)"
+		echo "u2) Update Grindhelper"
 		echo "e) Exit"
 		echo "====================================="
 
@@ -190,7 +191,9 @@ main_menu() {
 		ks) option_ks ;;
 		8) option_8 ;;
 		9) option_9 ;;
-		u) option_u ;;
+		u1) option_u1 ;;
+		u2) option_u2 ;;
+	
 		e) exit 0 ;;
 		*)
 			echo "Error, invalid input. Press ENTER to go back."
@@ -317,7 +320,28 @@ option_9() {
 	my_outputs
 }
 
-option_u() {
+
+option_u1() {
+	echo "Updating Grin to latest version branch: master"
+	cd $HOME/mw/grin/
+	git checkout master
+	git pull
+    cargo build
+	cp node1/grin.toml node1/grin.toml-bu-$(date +%Y%m%d)
+	cp server/grin.toml server/grin.toml-bu-$(date +%Y%m%d)
+	
+    cp grin.toml node1/
+	cp grin.toml server/
+	echo "Grin update update successful."
+	echo "New grin.toml deployed. Old grin.toml backupped."
+	echo -e "\nPress ENTER To Return"
+	read continue
+	/bin/grinhelper
+	exit 0
+}
+
+
+option_u2() {
 	echo "Updating"
 	wget -q https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O /bin/grinhelper
 	chmod +x /bin/grinhelper
