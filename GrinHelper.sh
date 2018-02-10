@@ -309,8 +309,10 @@ option_c2() {
 	echo "Checking if port 13413 is publicly reachable."
 	nc -w 2 $myip 13413 </dev/null;
 	if [ "$?" == "0" ]; then echo Success, port 13413 is reachable.; else echo Fail, port 13413 is NOT reachable.; fi
+	echo "Checking if port 13414 is publicly reachable."
 	nc -w 2 $myip 13414 </dev/null;
 	if [ "$?" == "0" ]; then echo Success, port 13414 is reachable.; else echo Fail, port 13414 is NOT reachable.; fi
+	echo "Checking if port 13415 is publicly reachable."
 	nc -w 2 $myip 13415 </dev/null;
 	if [ "$?" == "0" ]; then echo Success, port 13415 is reachable.; else echo Fail, port 13415 is NOT reachable.; fi
 
@@ -536,6 +538,6 @@ term_setup
 clear
 figlet -f small Launching
 figlet GrinHelper Suite
-sleep 3
+sleep 2
 clear
 main_menu
