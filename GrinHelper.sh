@@ -116,7 +116,6 @@ my_nonmining_server() {
 	cd $HOME/mw/grin/server
 	sed -i '/chain_type/c\chain_type = "Testnet1"' grin.toml
 	sed -i '/db_root/c\db_root = ".grin"' grin.toml
-	echo "Starting Testnet1 Non-Mining Node" > grin.log
 	export PATH=$HOME/mw/grin/target/debug/:$PATH
 	grin server run
 }
@@ -234,6 +233,8 @@ option_2a() {
 	##export function, run a new shell starting the server
 	export -f my_mining_server
 	screen -dm -S grinserver /bin/grinhelper my_mining_server
+	echo "Starting Testnet1 Mining Node" >> grin.log
+
 }
 
 
@@ -241,6 +242,8 @@ option_2b() {
 	##export function, run a new shell starting the server
 	export -f my_mining_server_testnet2
 	screen -dm -S grinserver /bin/grinhelper my_mining_server_testnet2
+	echo "Starting Testnet2 Mining Node" >> grin.log
+
 }
 
 
@@ -248,6 +251,8 @@ option_3() {
 	##export function, run a new shell starting the server
 	export -f my_nonmining_server
 	screen -dm -S grinserver /bin/grinhelper my_nonmining_server
+	echo "Starting Testnet1 Non-Mining Node" >> grin.log
+
 }
 
 option_4() {
