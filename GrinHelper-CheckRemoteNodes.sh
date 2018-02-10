@@ -20,10 +20,13 @@ option_1() {
 
 	for host in "${hosts[@]}"; do
 		IFS=":" names=($host)
-		echo -e "\033[0;34m\nHostname: ${names[2]} (IP: ${names[1]})\n\033[0m\n"
-
+		echo -e "\033[0;34m\nHostname: ${names[2]} (IP: ${names[1]})\n\033[0m"
+		if [ "${names[3]}" == "testnet1" ]; then
 		ssh ${names[1]} /bin/grinhelper remote_stats
-
+		else
+		echo -e "Testnet2 Node\n"
+		ssh ${names[1]} "tail -n 3 $BaseDir/grin/server/grin.log"
+		fi
 	done
 	echo ""
 	echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
