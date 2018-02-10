@@ -5,7 +5,8 @@
 
 #### Configuration ####
 ConfigFile="$(pwd)/GrinHelper-NodeList.conf"
-UpdateURL="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh"
+UpdateURL1="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh"
+UpdateURL2="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper-CheckRemoteNodes.sh"
 BaseDir="/root/mw"
 RustDir="~/.cargo/bin"
 
@@ -102,7 +103,11 @@ option_u() {
 	for host in "${hosts[@]}"; do
 		IFS=":" names=($host)
 		echo -e "\nUpdating Grinhelper at Hostname: ${names[2]} (IP: ${names[1]})\n"
-		ssh ${names[1]} "wget -q $UpdateURL -O /bin/grinhelper; chmod +x /bin/grinhelper"
+		ssh ${names[1]} "sudo wget -q $UpdateURL1 -O /bin/grinhelper; 
+		sudo chmod +x /bin/grinhelper;
+		if [ ! -f "/bin/GrinHelper" ]; then sudo ln -s /bin/grinhelper /bin/GrinHelper; fi;
+		sudo wget -q $UpdateURL1 -O /bin/GrinHelper-CheckRemoteNodes;
+		sudo chmod +x /bin/GrinHelper-CheckRemoteNodes"
 		echo "Finished updating Grinhelper at ${names[2]}"
 
 	done
