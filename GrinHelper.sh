@@ -180,9 +180,10 @@ main_menu() {
 		echo " "
 		echo "8) Show balance"
 		echo "9) Show outputs"
+		echo "s) Show sync & mining stats"
 		echo " "
-		echo "c) Check Grin processes"
-		echo "s) Check sync & mining stats"
+		echo "c1) Check Grin processes"
+		echo "c2) Check Grin connectivity - Check if Grins ports are publicly reachable."
 		echo " "
 		echo "k) Killall Grin processes"
 		echo "kw) Kill Grin Wallet"
@@ -204,7 +205,8 @@ main_menu() {
 		4) option_4 ;;
 		5) option_5 ;;
 		6) option_6 ;;
-		c) option_c ;;
+		c) option_c1 ;;
+		c) option_c2 ;;
 		s) option_s ;;
 		k) option_k ;;
 		kw) option_kw ;;
@@ -279,7 +281,7 @@ option_6() {
 	##TODO
 }
 
-option_c() {
+option_c1() {
 	echo " "
 	echo "Checking services ..."
 	echo " "
@@ -294,6 +296,30 @@ option_c() {
 	read continue
 	main_menu
 }
+
+option_c2() {
+	echo " "
+	echo "Checking if Grins ports are publicly reachable ..."
+	echo " "
+
+	if netstat -an | grep -q "13413"; then echo "Standard port 13413 is open."; else echo "Standard port 13413 is NOT open."; fi
+	if netstat -an | grep -q "13414"; then echo "Standard port 13414 is open."; else echo "Standard port 13414 is NOT open."; fi
+	if netstat -an | grep -q "13415"; then echo "Standard port 13415 is open."; else echo "Standard port 13415 is NOT open."; fi
+	export myip=`curl -s icanhazip.com`
+	echo "Checking if port 13413 is publicly reachable."
+	nc -w 2 $myip 13413 </dev/null;
+	if [ "$?" == "0" ]; then echo Success, port 13413 is reachable.; else echo Fail, port 13413 is NOT reachable.; fi
+	nc -w 2 $myip 13414 </dev/null;
+	if [ "$?" == "0" ]; then echo Success, port 13414 is reachable.; else echo Fail, port 13414 is NOT reachable.; fi
+	nc -w 2 $myip 13415 </dev/null;
+	if [ "$?" == "0" ]; then echo Success, port 13415 is reachable.; else echo Fail, port 13415 is NOT reachable.; fi
+
+	echo " "
+	echo "Press ENTER To Return"
+	read continue
+	main_menu
+}
+
 
 option_s() {
 	# tail -n 100 grin.log | grep Graphs|tail -n 1 |  cut -c21-
