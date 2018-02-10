@@ -1,12 +1,13 @@
 #!/bin/bash
 export TERM=xterm
 clear
-echo -e "\nDownloading GrinHelper.sh and GrinHelper-Remote.sh to $(pwd)"
+echo -e "\nDownloading GrinHelper.sh to $(pwd)/grinhelper"
+echo -e "\nDownloading GrinHelper-Remote.sh to $(pwd)/grinhelper-remote"
 
 wget -O ./grinhelper https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh 2>&1 | grep "^wget:"
 wget -O ./grinhelper-remote https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper-Remote.sh 2>&1 | grep "^wget:"
 
-echo -e "\nMake GrinHelper & GrinHelper Remote script executable"
+echo -e "\nMake GrinHelper & GrinHelper-Remote script executable"
 chmod +x ./grinhelper
 chmod +x ./grinhelper-remote
 
