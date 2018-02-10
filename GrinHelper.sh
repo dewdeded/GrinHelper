@@ -154,13 +154,11 @@ main_menu() {
 		echo " "
 		echo -e "Please select an option\n"
 		echo "1)  Grin Wallet Server - Start detached"
-		echo "l1) Grin Wallet Server - Check logfiles"
-		echo " "
 		echo "2)  Grin Mining Node - Start detached"
-		echo "l2) Grin Mining Node - Check logfiles"
-		echo " "
 		echo "3)  Grin Regular Node (non-mining) - Start detached"
-		echo "l3) Grin Regular Node (non-mining) - Check logfiles"
+		echo " "
+		echo "4) Check Wallet logfiles"
+		echo "5) Check Node logfiles"
 		echo " "
 		echo "8) View balance"
 		echo "9) Show outputs"
@@ -178,11 +176,8 @@ main_menu() {
 		case "$m_menu" in
 
 		1) option_1 ;;
-		l1) option_l1 ;;
 		2) option_2 ;;
-		l2) option_l2 ;;
 		3) option_3 ;;
-		l3) option_l3 ;;
 		4) option_4 ;;
 		5) option_5 ;;
 		6) option_6 ;;
@@ -207,24 +202,10 @@ option_1() {
 	screen -dm -S grinnode /bin/grinhelper my_wallet
 }
 
-option_l1() {
-	tail -f $HOME/mw/grin/node1/grin.log
-	echo "Press ENTER To Return"
-	read continue
-	main_menu
-}
-
 option_2() {
 	##export function, run a new shell starting the server
 	export -f my_mining_server
 	screen -dm -S grinserver /bin/grinhelper my_mining_server
-}
-
-option_l2() {
-	tail -f $PathGrinLogFile
-	echo "Press ENTER To Return"
-	read continue
-	main_menu
 }
 
 option_3() {
@@ -233,19 +214,21 @@ option_3() {
 	screen -dm -S grinserver /bin/grinhelper my_nonmining_server
 }
 
-option_l3() {
+option_4() {
+	tail -f $HOME/mw/grin/node1/grin.log
+	echo "Press ENTER To Return"
+	read continue
+	main_menu
+}
+
+
+option_5() {
 	tail -f $PathGrinLogFile
 	echo "Press ENTER To Return"
 	read continue
 	main_menu
 }
 
-option_4() {
-	tail -f $PathGrinLogFile
-	echo "Press ENTER To Return"
-	read continue
-	main_menu
-}
 
 option_6() {
 	echo "option 6"
