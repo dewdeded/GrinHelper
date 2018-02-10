@@ -83,10 +83,10 @@ my_wallet() {
 	cd $HOME/mw/grin/node1
 	export PATH=$HOME/mw/grin/target/debug:$PATH
 	if [ -f "$HOME/mw/grin/node1/wallet.seed" ]; then
-		echo Grin Node is now running, please keep this window open
+		echo Grin Server is now running, please keep this window open
 		grin wallet -p password -e listen
 	else
-		echo Grin Node is now running, please keep this window open
+		echo Grin Server is now running, please keep this window open
 		grin wallet init
 		grin wallet -p password -e listen
 	fi
@@ -97,22 +97,20 @@ my_mining_server() {
 	cd $HOME/mw/grin/server
 	sed -i '/chain_type/c\chain_type = "Testnet1"' grin.toml
 	sed -i '/db_root/c\db_root = ".grin"' grin.toml
-	echo "Starting Testnet1 Mining Node" > grin.log
+	echo "Starting Testnet1 Server: Mining enabled" > $PathGrinServerLogFile
 	export PATH=$HOME/mw/grin/target/debug/:$PATH
 	grin server -m run
 }
-
 
 ## Starter Mining Server Testnet 2
 my_mining_server_testnet2() {
 	cd $HOME/mw/grin/server
 	sed -i '/chain_type/c\chain_type = "Testnet2"' grin.toml
 	sed -i '/db_root/c\db_root = ".grin-testnet"' grin.toml
-	echo "Starting Testnet2 Mining Node" > grin.log
+	echo "Starting Testnet2 Server: Mining enabled" >$PathGrinServerLogFile
 	export PATH=$HOME/mw/grin/target/debug/:$PATH
 	grin server -m run
 }
-
 
 ## Starter Nonmining Server
 my_nonmining_server() {
@@ -169,70 +167,68 @@ term_setup() {
 main_menu() {
 	while :; do
 		clear
-	#	figlet -f small "GrinHelper Suite";
-	#	figlet -f small "$host"
-
-		echo -e "\033[0;33mGrinhelper Suite @ $host:\033[0m \033[31mMain Menu\033[0m\n"
-		echo "g1) Grin Wallet (Testnet1)"
-		echo "g2) Grin Mining Node (Testnet1)"
-		echo "g3) Grin Mining Node (Testnet2)"
-		echo "g4) Grin Non-mining Node (Testnet1)"
-		echo " "
+		echo -e "\033[0;33mGrinhelper Suite @ $host\n\033[0m"
+		echo "g1) Grin Wallet @ Testnet1				f1) Grin Wallet @ Testnet2"
+		echo "g2) Grin Server: Mining enabled @ Testnet1		f2) Grin Server: Mining enabled @ Testnet2"
+		echo "g3) Grin Server: Mining disabled @ Testnet1		f3) Grin Server: Mining disabled @ Testnet2"
+		echo ""
 		echo "l1) View Grin Wallet Logfile"
-		echo "l2) View Grin Node Logfile"
+		echo "l2) View Grin Server Logfile"
 		echo " "
 		echo "s1) Show Balance"
 		echo "s2) Show Outputs"
 		echo "s3) Show Sync & Mining Stats"
 		echo " "
-		echo "c1) Check Grin Processes"
-		echo "c2) Check Grin Connectivity - Check if Grins ports are publicly reachable."
+		echo "c1) Check Grin Processes - Shows running Grin instances"
+		echo "c2) Check Grin Connectivity - Check, if Grins ports are publicly reachable."
 		echo " "
-		echo "k1) Killall Grin Processes"
-		echo "k2) Kill Grin Wallet"
-		echo "k3) Kill Grin Node"
+		echo "k1) Killall Grin Processes - Stops all Grin instances"
+		echo "k2) Kill Grin Wallet - Stops Grin Wallet"
+		echo "k3) Kill Grin Server - Stops Grin Server"
 		echo " "
-		echo "u1) Update Grin (to latest version in branch: master)"
-		echo "u2) Update Grindhelper"
-		echo " "
-		echo "e) Exit"
+		echo "u1) Update Grin - Update Grin to latest commit in master branch."
+		echo "u2) Update GrinHelper - Update GrinHelper Suite"
 		echo ""
-		read -rep $'Please select an option: ' m_menu
+		read -rep $'\033[31mMain Menu\033[0m - Select Option: ' m_menu
 
 		case "$m_menu" in
 
-		# Grin
+		# Grin Testnet1
 		g1) option_g1 ;;
 		g2) option_g2 ;;
 		g3) option_g3 ;;
-		g4) option_g4 ;;
-		
+
+		# Grin Testnet2
+		f1) option_f1 ;;
+		f2) option_f2 ;;
+		f3) option_f3 ;;
+
 		# Logfiles
 		l1) option_l1 ;;
 		l2) option_l2 ;;
-	
+
 		# Stats
 		s1) option_s1 ;;
 		s2) option_s2 ;;
 		s3) option_s3 ;;
-		
+
 		# Checks
 		c1) option_c1 ;;
 		c2) option_c2 ;;
-	
+
 		# Kill
 		k1) option_k1 ;;
 		k2) option_k2 ;;
 		k3) option_k3 ;;
-		
 
 		# Updates
 		u1) option_u1 ;;
 		u2) option_u2 ;;
-	
+
 		e) exit 0 ;;
 		*)
-			echo "Error, invalid input. Press ENTER to go back."
+			echo "Error, invalid input. Press E to exit GrinHelper."
+			echo "Press ENTER to go back."
 			read
 			;;
 		esac
@@ -243,35 +239,49 @@ option_g1() {
 	##export function, run a new shell starting the wallet/node listener
 	export -f my_wallet
 	screen -dm -S grinwallet /bin/grinhelper my_wallet
+	echo "Starting Grin Wallet."
+	sleep 2
 }
 
 option_g2() {
 	##export function, run a new shell starting the server
 	export -f my_mining_server
-	rm $HOME/mw/grin/server/grin.log
+	rm $PathGrinServerLogFile
 	screen -dm -S grinserver /bin/grinhelper my_mining_server
-	echo "Starting Testnet1 Mining Node" >> $HOME/mw/grin/server/grin.log
-
+	echo "Starting Testnet1 Server: Mining enabled" >> $PathGrinServerLogFile
+	echo "Starting Testnet1 Server: Mining enabled"
+	sleep 2
 }
-
 
 option_g3() {
 	##export function, run a new shell starting the server
-	export -f my_mining_server_testnet2
-	rm $HOME/mw/grin/server/grin.log
-	screen -dm -S grinserver /bin/grinhelper my_mining_server_testnet2
-	echo "Starting Testnet2 Mining Node" >> $HOME/mw/grin/server/grin.log
+	export -f my_nonmining_server
+	rm $PathGrinServerLogFile
+	screen -dm -S grinserver /bin/grinhelper my_nonmining_server
+	echo "Starting Testnet1 Grin Server: Mining disabled" >> $PathGrinServerLogFile
+	echo "Starting Testnet1 Grin Server: Mining disabled"
+	sleep 2
+}
 
+option_f1() {
+	echo "Todo"
+	sleep 2
+}
+
+option_f2() {
+	##export function, run a new shell starting the server
+	export -f my_mining_server_testnet2
+	rm $PathGrinServerLogFile
+	screen -dm -S grinserver /bin/grinhelper my_mining_server_testnet2
+	echo "Starting Testnet2 Server: Mining enabled" >> $PathGrinServerLogFile
+	echo "Starting Testnet2 Server: Mining enabled"
+	sleep 2
 }
 
 
-option_g4() {
-	##export function, run a new shell starting the server
-	export -f my_nonmining_server
-	rm $HOME/mw/grin/server/grin.log
-	screen -dm -S grinserver /bin/grinhelper my_nonmining_server
-	echo "Starting Testnet1 Non-Mining Node" >> $HOME/mw/grin/server/grin.log
-
+option_f3() {
+	echo "Todo"
+	sleep 2
 }
 
 option_l1() {
@@ -281,14 +291,12 @@ option_l1() {
 	main_menu
 }
 
-
 option_l2() {
 	tail -f $PathGrinServerLogFile
 	echo "Press ENTER To Return"
 	read continue
 	main_menu
 }
-
 
 option_c1() {
 	echo " "
@@ -298,7 +306,7 @@ option_c1() {
 	if ps aux | grep -q "[m]y_mining_server"; then echo "Mining server is running"; else echo "Mining server is NOT running"; fi
 	if ps aux | grep -q "[m]y_nonmining_server"; then echo "Non mining server is running"; else echo "Non mining server is NOT running"; fi
 	echo " "
-	LogFileSize=$(ls -lh $HOME/mw/grin/server/grin.log | awk '{print $5}')
+	LogFileSize=$(ls -lh $PathGrinServerLogFile | awk '{print $5}')
 	echo "Size Logfile: $LogFileSize"
 	echo " "
 	echo "Press ENTER To Return"
@@ -314,15 +322,15 @@ option_c2() {
 	if netstat -an | grep -q "13413"; then echo "Standard port 13413 is open."; else echo "Standard port 13413 is NOT open."; fi
 	if netstat -an | grep -q "13414"; then echo "Standard port 13414 is open."; else echo "Standard port 13414 is NOT open."; fi
 	if netstat -an | grep -q "13415"; then echo "Standard port 13415 is open."; else echo "Standard port 13415 is NOT open."; fi
-	export myip=`curl -s icanhazip.com`
+	export myip=$(curl -s icanhazip.com)
 	echo -e "\nChecking if port 13413 is publicly reachable."
-	nc -w 2 $myip 13413 </dev/null;
+	nc -w 2 $myip 13413 </dev/null
 	if [ "$?" == "0" ]; then echo Success, port 13413 is reachable.; else echo Fail, port 13413 is NOT reachable.; fi
 	echo -e "\nChecking if port 13414 is publicly reachable."
-	nc -w 2 $myip 13414 </dev/null;
+	nc -w 2 $myip 13414 </dev/null
 	if [ "$?" == "0" ]; then echo Success, port 13414 is reachable.; else echo Fail, port 13414 is NOT reachable.; fi
 	echo -e "\nChecking if port 13415 is publicly reachable."
-	nc -w 2 $myip 13415 </dev/null;
+	nc -w 2 $myip 13415 </dev/null
 	if [ "$?" == "0" ]; then echo Success, port 13415 is reachable.; else echo Fail, port 13415 is NOT reachable.; fi
 
 	echo " "
@@ -338,9 +346,7 @@ option_s2() {
 	my_outputs
 }
 
-
 option_s3() {
-	# tail -n 100 grin.log | grep Graphs|tail -n 1 |  cut -c21-
 	echo " "
 	echo "Network height:			$(curl -s https://grintest.net/v1/chain | jq .height)"
 	echo "Network difficulty:		$(curl -s https://grintest.net/v1/chain | jq .total_difficulty)"
@@ -373,7 +379,6 @@ option_k1() {
 	main_menu
 }
 
-
 option_k2() {
 	echo "Killing Grin Wallet"
 	screen -X -S grinwallet kill
@@ -382,7 +387,6 @@ option_k2() {
 	read continue
 	main_menu
 }
-
 
 option_k3() {
 	echo "Killing Grin Server"
@@ -393,18 +397,16 @@ option_k3() {
 	main_menu
 }
 
-
-
 option_u1() {
 	echo "Updating Grin to latest version branch: master"
 	cd $HOME/mw/grin/
 	git checkout master
 	git pull
-    cargo build
+	cargo build
 	cp node1/grin.toml node1/grin.toml-bu-$(date +%Y%m%d)
 	cp server/grin.toml server/grin.toml-bu-$(date +%Y%m%d)
-	
-    cp grin.toml node1/
+
+	cp grin.toml node1/
 	cp grin.toml server/
 	echo "Grin update update successful."
 	echo "New grin.toml deployed. Old grin.toml backupped."
@@ -412,7 +414,6 @@ option_u1() {
 	read continue
 	main_menu
 }
-
 
 option_u2() {
 	echo "Updating"
@@ -443,7 +444,7 @@ autofix_logfilesize() {
 		fi
 		if ps aux | grep -q "[m]y_nonmining_server"; then
 			screen -S grinserver -X quit
-			option_g4
+			option_g3
 		fi
 		screen -wipe
 	fi
@@ -453,7 +454,7 @@ remote_stats() {
 	echo "Local height:			$(curl -s http://127.0.0.1:13413/v1/chain | jq .height)"
 	echo "Local difficulty:		$(curl -s http://127.0.0.1:13413/v1/chain | jq .total_difficulty)"
 	echo "Graphs per second:		$(grep Graphs $PathGrinServerLogFile | tail -n 1 | awk ' { print $19 } ')"
-	LogFileSize=$(ls -lh $HOME/mw/grin/server/grin.log | awk '{print $5}')
+	LogFileSize=$(ls -lh $PathGrinServerLogFile | awk '{print $5}')
 	echo "Size Logfile:			$LogFileSize"
 
 	if ps aux | grep -q "[m]y_wallet"; then echo "Wallet is running"; else echo "Wallet is NOT running"; fi
@@ -465,13 +466,14 @@ remote_stats() {
 ### Begin Main Script
 #############################################################
 
+### Checks 
 # Test and install script deps
-which sudo  >/dev/null 2>&1 || {
+which sudo >/dev/null 2>&1 || {
 	apt-get update -y
 	apt-get install -y sudo
 }
 
-which sudo figlet jq screen curl >/dev/null 2>&1 || {
+which figlet jq screen curl >/dev/null 2>&1 || {
 	sudo apt-get update -y
 	sudo apt-get install -y figlet jq screen curl
 }
@@ -506,6 +508,7 @@ if [ ! -d "$HOME/mw/grin/" ]; then
 	main_installer
 fi
 
+########### Begin programm logic
 # trap ctrl-c and call ctrl_c() for quitting log file viewing
 trap ctrl_c INT
 
@@ -543,10 +546,10 @@ if [ "$1" == "remote_stats" ]; then
 fi
 
 autofix_logfilesize
-term_setup 
+term_setup
 clear
 figlet -f small Launching
 figlet GrinHelper Suite
-sleep 2
+sleep 1.5
 clear
 main_menu
