@@ -423,7 +423,7 @@ option_u2() {
 	sudo chmod +x /bin/grinhelper;
 	if [ ! -f "/bin/GrinHelper" ]; then sudo ln -s /bin/grinhelper /bin/GrinHelper; fi;
 	sudo wget -q $UpdateURL2 -O /bin/GrinHelper-Remote;
-	sudo chmod +x /bin/GrinHelper-Remote"
+	sudo chmod +x /bin/GrinHelper-Remote
 	clear
 	echo "Grinhelper update successful"
 	echo "Press ENTER To Return"
