@@ -148,7 +148,7 @@ term_setup() {
 main_menu() {
 	while :; do
 		clear
-		figlet -f small "GrinHelper Suite";
+	#	figlet -f small "GrinHelper Suite";
 	#	figlet -f small "$host"
 
 		echo -e "\033[0;33mGrinhelper Suite @ $host:\033[0m \033[31mMain Menu\033[0m"
@@ -464,6 +464,9 @@ if [ "$1" == "remote_stats" ]; then
 fi
 
 autofix_logfilesize
-term_setup
+term_setup 
+clear
+figlet -f small Launching
 figlet GrinHelper Suite
+sleep 2
 main_menu
