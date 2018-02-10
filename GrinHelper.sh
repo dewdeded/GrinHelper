@@ -151,7 +151,7 @@ main_menu() {
 	#	figlet -f small "GrinHelper Suite";
 	#	figlet -f small "$host"
 
-		echo -e "\033[0;33mGrinhelper Suite @ $host:\033[0m \033[31mMain Menu\033[0m"
+		echo -e "\033[0;33mGrinhelper Suite @ $host:\033[0m \033[31mMain Menu\033[0m\n"
 		echo "1) Grin Wallet Server (Start detached)"
 		echo "2) Grin Mining Node (Start detached)"
 		echo "3) Grin Non-mining Node (Start detached)"
@@ -468,5 +468,6 @@ term_setup
 clear
 figlet -f small Launching
 figlet GrinHelper Suite
-sleep 2
+sleep 3
+clear
 main_menu
