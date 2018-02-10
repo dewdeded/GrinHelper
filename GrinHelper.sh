@@ -14,6 +14,14 @@ MaxLogSize=100M
 #### Function definition ####
 ## Installer Rust
 rust_installer() {
+	while true; do
+		read -p "Rust not found. Do you wish to install Rust now? " yn
+		case $yn in
+		[Yy]*) break ;;
+		[Nn]*) exit ;;
+		*) echo "Please answer yes or no." ;;
+		esac
+	done
 	export TERM=xterm
 	sudo apt-get update -y
 	sudo apt-get install build-essential cmake -y
@@ -25,6 +33,14 @@ rust_installer() {
 
 ## Installer Clang
 clang_installer() {
+	while true; do
+		read -p "Clang not found. Do you wish to install Clang now? " yn
+		case $yn in
+		[Yy]*) break ;;
+		[Nn]*) exit ;;
+		*) echo "Please answer yes or no." ;;
+		esac
+	done
 	export TERM=xterm
 	sudo apt-get update -y
 	sudo apt-get install dialog psmisc -y
