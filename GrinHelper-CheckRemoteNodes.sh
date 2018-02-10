@@ -55,9 +55,15 @@ option_3() {
 	for host in "${hosts[@]}"; do
 		IFS=":" names=($host)
 		echo -e "\nHostname: ${names[2]} (IP: ${names[1]})\n"
+	if [ "${names[3]}" == "testnet1" ]; then
 		cmd="export PATH=\"$BaseDir/grin/target/debug:$RustDir/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\"; pushd "$BaseDir/grin/node1" > /dev/null ; grin wallet -p password info|grep Spend"
 		balance=$(ssh -o LogLevel=QUIET ${names[1]} -t "$cmd" | awk '{print $4}')
 		echo "${names[2]} has $balance"
+
+		else
+		echo -e "Testnet2 Node, no wallet ATM\n"
+		#ssh ${names[1]} "tail -n 3 $BaseDir/grin/server/grin.log"
+		fi
 	done
 
 	echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
