@@ -10,7 +10,7 @@ Grin is an in-progress implementation of the MimbleWimble protocol. To learn mor
 ```bash
 wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O ./grinhelper
 chmod +x ./grinhelper
-sudo mv ./grinhelper /bin/ # needs root for /bin or if you prefer /usr/bin or ~/bin/ perhaps
+sudo mv ./grinhelper /bin    # Needs root for /bin or if you prefer choose /usr/bin or ~/bin/ perhaps
 ```
 
 ## GrinHelper.sh
@@ -30,24 +30,29 @@ This is what this script will do for you.
 
 #### Launcher and corresponding logviewer
 
-- Start detached Grin Wallet Node
-- Check logfiles of Grin Wallet Node
-- Start detached Grin Mining Server
-- Check logfiles of Grin Mining Server
-- Start detached Grin Regular Server (non-mining)
-- Check logfiles of Grin Regular Server (non-mining)
+- Start detached Grin Wallet (Testnet1)
+- Start detached Grin Mining Node (Testnet1)
+- Start detached Grin Mining Node (Testnet2)
+- Start detached Grin Non-mining Node (Testnet1)
 
-#### Show funds and transfers
+#### Logviewer
 
-- View balance of local Grin wallet
+- Check logfiles of Grin Wallet
+- Check logfiles of Grin Node
+
+#### Show funds, transfers and stats
+
+- Show balance of local Grin wallet
 - Show outputs of local Grin wallet
+- Show sync & mining statsof local Grin Node
 
-#### Monitoring and operations
+#### Monitoring, operations and update
 
 - Check which Grin processes are running
-- Show sync & mining stats
-- Killall Grin processes
+- Check Grin Connectivity - Check if Grins ports are publicly reachable.
+- Stop Grin processes (Killall Grin processes, Kill Grin Wallet, Kill Grin Node)
 - Update GrindHelper
+- Update Grin (to latest version in master-branch.)
 
 ## GrinHelper-CheckRemoteNodes.sh
 
@@ -58,6 +63,7 @@ This script manages, monitors and aggregate status info from remote Grin nodes.
 - Check Sync & Mining Stats (at all remote nodes)
 - Check Outputs (at all remote nodes)
 - Check Balance (at all remote nodes)
+- Check Connectivity (off all remote nodes)
 - Update GrinHelper (on all remote nodes)
 
 [![asciicast](https://asciinema.org/a/tNSrjbW66g8ph043lKT7jxqdE.png)](https://asciinema.org/a/tNSrjbW66g8ph043lKT7jxqdE)
