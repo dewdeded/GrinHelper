@@ -149,10 +149,11 @@ main_menu() {
 	while :; do
 		clear
 		figlet -f small "GrinHelper Suite";
-		figlet -f small "$host"
+	#	figlet -f small "$host"
 
 		echo " "
-		echo -e "Please select an option\n"
+		echo -e "\033[0;33mGrinhelper Suite @ $host:\033[0m \033[31mMain Menu\033[0m"
+		echo -e "\n"
 		echo "1) Grin Wallet Server (Start detached)"
 		echo "2) Grin Mining Node (Start detached)"
 		echo "3) Grin Non-mining Node (Start detached)"
@@ -171,8 +172,10 @@ main_menu() {
 		echo " "
 		echo "u1) Update Grin (to latest version in branch: master)"
 		echo "u2) Update Grindhelper"
+		echo " "
 		echo "e) Exit"
 		echo "====================================="
+		echo -e "Please select an option: "
 
 		read m_menu
 
