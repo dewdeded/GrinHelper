@@ -402,7 +402,7 @@ autofix_logfilesize() {
 		fi
 		if ps aux | grep -q "[m]y_mining_server"; then
 			screen -S grinserver -X quit
-			option_2
+			option_2a
 		fi
 		if ps aux | grep -q "[m]y_nonmining_server"; then
 			screen -S grinserver -X quit
@@ -484,6 +484,12 @@ fi
 ## Check if CLI argument passed to direct start grin mining server
 if [ "$1" == "my_mining_server" ]; then
 	my_mining_server
+	exit 1
+fi
+
+## Check if CLI argument passed to direct start grin mining server
+if [ "$1" == "my_mining_server_testnet2" ]; then
+	my_mining_server_testnet2
 	exit 1
 fi
 
