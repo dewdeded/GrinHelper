@@ -265,7 +265,7 @@ option_s() {
 	echo "Local difficulty:		$(curl -s http://127.0.0.1:13413/v1/chain | jq .total_difficulty)"
 	echo " "
 	if ps aux | grep -q "[m]y_mining_server"; then
-		echo "Chain type: 			$(grep chain_type grin.toml | awk '{print $3}' | sed 's/"//g')"
+		echo "Chain type: 			$(grep chain_type grin.toml | awk '{print $3}' | sed 's/"//g')."
 		echo "Last graph time:		$(grep Graphs $PathGrinLogFile | tail -n 1 | awk ' { print $15 } ' | sed -e 's/;//g')"
 		echo "Graphs per second:		$(grep Graphs $PathGrinLogFile | tail -n 1 | awk ' { print $19 } ')"
 	else
