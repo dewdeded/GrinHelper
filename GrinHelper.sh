@@ -5,7 +5,10 @@
 
 #### Configuration ####
 # Setup path to Grin server logfile
-PathGrinLogFile=$HOME/mw/grin/server/grin.log
+PathGrinServerLogFile=$HOME/mw/grin/server/grin.log
+# Setup path to Grin wallet logfile
+PathGrinWalletLogFile=$HOME/mw/grin/node1/grin.log
+
 # Max logfile size
 MaxLogSize=100M
 
@@ -170,24 +173,24 @@ main_menu() {
 	#	figlet -f small "$host"
 
 		echo -e "\033[0;33mGrinhelper Suite @ $host:\033[0m \033[31mMain Menu\033[0m\n"
-		echo "1) Grin Wallet Server (Testnet1)"
-		echo "2a) Grin Mining Node (Testnet1)"
-		echo "2b) Grin Mining Node (Testnet2)"
-		echo "3) Grin Non-mining Node (Testnet1)"
+		echo "g1) Grin Wallet (Testnet1)"
+		echo "g2) Grin Mining Node (Testnet1)"
+		echo "g3) Grin Mining Node (Testnet2)"
+		echo "g4) Grin Non-mining Node (Testnet1)"
 		echo " "
-		echo "4) View Wallet logfile"
-		echo "5) View Node logfile"
+		echo "l1) View Grin Wallet Logfile"
+		echo "l2) View Grin Node Logfile"
 		echo " "
-		echo "8) Show balance"
-		echo "9) Show outputs"
-		echo "s) Show sync & mining stats"
+		echo "s1) Show Balance"
+		echo "s2) Show Outputs"
+		echo "s3) Show Sync & Mining Stats"
 		echo " "
-		echo "c1) Check Grin processes"
-		echo "c2) Check Grin connectivity - Check if Grins ports are publicly reachable."
+		echo "c1) Check Grin Processes"
+		echo "c2) Check Grin Connectivity - Check if Grins ports are publicly reachable."
 		echo " "
-		echo "k) Killall Grin processes"
-		echo "kw) Kill Grin Wallet"
-		echo "ks) Kill Grin Node"
+		echo "k1) Killall Grin Processes"
+		echo "k2) Kill Grin Wallet"
+		echo "k3) Kill Grin Node"
 		echo " "
 		echo "u1) Update Grin (to latest version in branch: master)"
 		echo "u2) Update Grindhelper"
@@ -198,21 +201,32 @@ main_menu() {
 
 		case "$m_menu" in
 
-		1) option_1 ;;
-		2a) option_2a ;;
-		2b) option_2b ;;
-		3) option_3 ;;
-		4) option_4 ;;
-		5) option_5 ;;
-		6) option_6 ;;
+		# Grin
+		g1) option_g1 ;;
+		g2) option_g2 ;;
+		g3) option_g3 ;;
+		g4) option_g4 ;;
+		
+		# Logfiles
+		l1) option_l1 ;;
+		l2) option_l2 ;;
+	
+		# Stats
+		s1) option_s1 ;;
+		s2) option_s2 ;;
+		s3) option_s3 ;;
+		
+		# Checks
 		c1) option_c1 ;;
 		c2) option_c2 ;;
-		s) option_s ;;
-		k) option_k ;;
-		kw) option_kw ;;
-		ks) option_ks ;;
-		8) option_8 ;;
-		9) option_9 ;;
+	
+		# Kill
+		k1) option_k1 ;;
+		k2) option_k2 ;;
+		k3) option_k3 ;;
+		
+
+		# Updates
 		u1) option_u1 ;;
 		u2) option_u2 ;;
 	
@@ -225,13 +239,13 @@ main_menu() {
 	done
 }
 
-option_1() {
+option_g1() {
 	##export function, run a new shell starting the wallet/node listener
 	export -f my_wallet
 	screen -dm -S grinwallet /bin/grinhelper my_wallet
 }
 
-option_2a() {
+option_g2() {
 	##export function, run a new shell starting the server
 	export -f my_mining_server
 	rm $HOME/mw/grin/server/grin.log
@@ -241,7 +255,7 @@ option_2a() {
 }
 
 
-option_2b() {
+option_g3() {
 	##export function, run a new shell starting the server
 	export -f my_mining_server_testnet2
 	rm $HOME/mw/grin/server/grin.log
@@ -251,7 +265,7 @@ option_2b() {
 }
 
 
-option_3() {
+option_g4() {
 	##export function, run a new shell starting the server
 	export -f my_nonmining_server
 	rm $HOME/mw/grin/server/grin.log
@@ -260,26 +274,21 @@ option_3() {
 
 }
 
-option_4() {
-	tail -f $HOME/mw/grin/node1/grin.log
+option_l1() {
+	tail -f $PathGrinWalletLogFile
 	echo "Press ENTER To Return"
 	read continue
 	main_menu
 }
 
 
-option_5() {
-	tail -f $PathGrinLogFile
+option_l2() {
+	tail -f $PathGrinServerLogFile
 	echo "Press ENTER To Return"
 	read continue
 	main_menu
 }
 
-
-option_6() {
-	echo "option 6"
-	##TODO
-}
 
 option_c1() {
 	echo " "
@@ -321,9 +330,16 @@ option_c2() {
 	read continue
 	main_menu
 }
+option_s1() {
+	my_spendbalance
+}
+
+option_s2() {
+	my_outputs
+}
 
 
-option_s() {
+option_s3() {
 	# tail -n 100 grin.log | grep Graphs|tail -n 1 |  cut -c21-
 	echo " "
 	echo "Network height:			$(curl -s https://grintest.net/v1/chain | jq .height)"
@@ -334,8 +350,8 @@ option_s() {
 	echo " "
 	if ps aux | grep -q "[m]y_mining_server"; then
 		echo "Chain type: 			$(grep chain_type grin.toml | awk '{print $3}' | sed 's/"//g')."
-		echo "Last graph time:		$(grep Graphs $PathGrinLogFile | tail -n 1 | awk ' { print $15 } ' | sed -e 's/;//g')"
-		echo "Graphs per second:		$(grep Graphs $PathGrinLogFile | tail -n 1 | awk ' { print $19 } ')"
+		echo "Last graph time:		$(grep Graphs $PathGrinServerLogFile | tail -n 1 | awk ' { print $15 } ' | sed -e 's/;//g')"
+		echo "Graphs per second:		$(grep Graphs $PathGrinServerLogFile | tail -n 1 | awk ' { print $19 } ')"
 	else
 		echo " "
 		echo "Mining server is NOT running"
@@ -348,7 +364,7 @@ option_s() {
 	main_menu
 }
 
-option_k() {
+option_k1() {
 	echo "Killing Grin Wallet & Server"
 	killall -9 grin
 	killall -9 screen
@@ -358,7 +374,7 @@ option_k() {
 }
 
 
-option_kw() {
+option_k2() {
 	echo "Killing Grin Wallet"
 	screen -X -S grinwallet kill
 	screen -wipe
@@ -368,7 +384,7 @@ option_kw() {
 }
 
 
-option_ks() {
+option_k3() {
 	echo "Killing Grin Server"
 	screen -X -S grinserver kill
 	screen -wipe
@@ -377,13 +393,6 @@ option_ks() {
 	main_menu
 }
 
-option_8() {
-	my_spendbalance
-}
-
-option_9() {
-	my_outputs
-}
 
 
 option_u1() {
@@ -420,21 +429,21 @@ option_u2() {
 ##### Autofix Logfile size
 autofix_logfilesize() {
 	# Delete to big logfile
-	find "$PathGrinLogFile" -size +$MaxLogSize -delete
+	find "$PathGrinServerLogFile" -size +$MaxLogSize -delete
 
 	# Restart Grin services
-	if [ ! -f $PathGrinLogFile ]; then
+	if [ ! -f $PathGrinServerLogFile ]; then
 		if ps aux | grep -q "[m]y_wallet"; then
 			screen -S grinwallet -X quit
-			option_1
+			option_g1
 		fi
 		if ps aux | grep -q "[m]y_mining_server"; then
 			screen -S grinserver -X quit
-			option_2a
+			option_g2
 		fi
 		if ps aux | grep -q "[m]y_nonmining_server"; then
 			screen -S grinserver -X quit
-			option_3
+			option_g4
 		fi
 		screen -wipe
 	fi
@@ -443,7 +452,7 @@ autofix_logfilesize() {
 remote_stats() {
 	echo "Local height:			$(curl -s http://127.0.0.1:13413/v1/chain | jq .height)"
 	echo "Local difficulty:		$(curl -s http://127.0.0.1:13413/v1/chain | jq .total_difficulty)"
-	echo "Graphs per second:		$(grep Graphs $PathGrinLogFile | tail -n 1 | awk ' { print $19 } ')"
+	echo "Graphs per second:		$(grep Graphs $PathGrinServerLogFile | tail -n 1 | awk ' { print $19 } ')"
 	LogFileSize=$(ls -lh $HOME/mw/grin/server/grin.log | awk '{print $5}')
 	echo "Size Logfile:			$LogFileSize"
 
