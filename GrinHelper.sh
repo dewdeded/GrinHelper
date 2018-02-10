@@ -153,19 +153,21 @@ main_menu() {
 
 		echo " "
 		echo -e "Please select an option\n"
-		echo "1)  Grin Wallet Server - Start detached"
-		echo "2)  Grin Mining Node - Start detached"
-		echo "3)  Grin Regular Node (non-mining) - Start detached"
+		echo "1) Grin Wallet Server (Start detached)"
+		echo "2) Grin Mining Node (Start detached)"
+		echo "3) Grin Non-mining Node (Start detached)"
 		echo " "
-		echo "4) Check Wallet logfiles"
-		echo "5) Check Node logfiles"
+		echo "4) View Wallet logfile"
+		echo "5) View Node logfile"
 		echo " "
-		echo "8) View balance"
+		echo "8) Show balance"
 		echo "9) Show outputs"
 		echo " "
 		echo "c) Check Grin processes"
 		echo "s) Check sync & mining stats"
 		echo "k) Killall Grin processes"
+		echo "kw) Kill Grin Wallet"
+		echo "ks) Kill Grin Node"
 		echo " "
 		echo "u) Update Grindhelper"
 		echo "e) Exit"
@@ -184,6 +186,8 @@ main_menu() {
 		c) option_c ;;
 		s) option_s ;;
 		k) option_k ;;
+		kw) option_kw ;;
+		ks) option_ks ;;
 		8) option_8 ;;
 		9) option_9 ;;
 		u) option_u ;;
@@ -199,7 +203,7 @@ main_menu() {
 option_1() {
 	##export function, run a new shell starting the wallet/node listener
 	export -f my_wallet
-	screen -dm -S grinnode /bin/grinhelper my_wallet
+	screen -dm -S grinwallet /bin/grinhelper my_wallet
 }
 
 option_2() {
@@ -276,8 +280,29 @@ option_s() {
 }
 
 option_k() {
+	echo "Killing Grin Wallet & Server"
 	killall -9 grin
 	killall -9 screen
+	echo "Press ENTER To Return"
+	read continue
+	main_menu
+}
+
+
+option_kw() {
+	echo "Killing Grin Wallet"
+	screen -X -S grinwallet kill
+	screen -wipe
+	echo "Press ENTER To Return"
+	read continue
+	main_menu
+}
+
+
+option_ks() {
+	echo "Killing Grin Server"
+	screen -X -S grinserver kill
+	screen -wipe
 	echo "Press ENTER To Return"
 	read continue
 	main_menu
@@ -311,7 +336,7 @@ autofix_logfilesize() {
 	# Restart Grin services
 	if [ ! -f $PathGrinLogFile ]; then
 		if ps aux | grep -q "[m]y_wallet"; then
-			screen -S grinnode -X quit
+			screen -S grinwallet -X quit
 			option_1
 		fi
 		if ps aux | grep -q "[m]y_mining_server"; then
