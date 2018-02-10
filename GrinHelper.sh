@@ -151,7 +151,6 @@ main_menu() {
 		figlet -f small "GrinHelper Suite";
 	#	figlet -f small "$host"
 
-		echo " "
 		echo -e "\033[0;33mGrinhelper Suite @ $host:\033[0m \033[31mMain Menu\033[0m"
 		echo -e "\n"
 		echo "1) Grin Wallet Server (Start detached)"
@@ -166,6 +165,7 @@ main_menu() {
 		echo " "
 		echo "c) Check Grin processes"
 		echo "s) Check sync & mining stats"
+		echo " "
 		echo "k) Killall Grin processes"
 		echo "kw) Kill Grin Wallet"
 		echo "ks) Kill Grin Node"
@@ -175,9 +175,7 @@ main_menu() {
 		echo " "
 		echo "e) Exit"
 		echo "====================================="
-		echo -e "Please select an option: "
-
-		read m_menu
+		read -rep $'Please select an option: ' m_menu
 
 		case "$m_menu" in
 
@@ -468,4 +466,5 @@ fi
 
 autofix_logfilesize
 term_setup
+figlet GrinHelper Suite
 main_menu
