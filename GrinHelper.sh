@@ -410,9 +410,11 @@ option_k3() {
 
 option_x1() {
 	echo "Fixing grin.toml"
-	sed -i -e $'s/\[server\]/\[server\]\\\narchive_mode = false/g' $HOME/mw/grin/grin.toml
-	sed -i -e $'s/\[server\]/\[server\]\\\narchive_mode = false/g' $HOME/mw/grin/node1/grin.toml
-	sed -i -e $'s/\[server\]/\[server\]\\\narchive_mode = false/g' $HOME/mw/grin/server/grin.toml
+	! grep -q archiv $HOME/mw/grin/grin.toml && sed -i -e $'s/\[server\]/\[server\]\\\narchive_mode = false/g' $HOME/mw/grin/grin.toml
+	
+	! grep -q archiv $HOME/mw/grin/node1/grin.toml && sed -i -e $'s/\[server\]/\[server\]\\\narchive_mode = false/g' $HOME/mw/grin/node1/grin.toml
+	
+	! grep -q archiv $HOME/mw/grin/server/grin.toml && sed -i -e $'s/\[server\]/\[server\]\\\narchive_mode = false/g' $HOME/mw/grin/server/grin.toml
 	
 	echo "Press ENTER To Return"
 	read continue
