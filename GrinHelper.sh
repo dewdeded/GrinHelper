@@ -227,6 +227,14 @@ main_menu() {
 		u1) option_u1 ;;
 		u2) option_u2 ;;
 
+		# Extras
+		x1) option_x1 ;;
+		x2) option_x2 ;;
+		x3) option_x3 ;;
+		x4) option_x4 ;;
+		x5) option_x5 ;;
+		x6) option_x6 ;;
+
 		e) exit 0 ;;
 		*)
 			echo "Error, invalid input. Press E to exit GrinHelper."
@@ -394,6 +402,18 @@ option_k3() {
 	echo "Killing Grin Server"
 	screen -X -S grinserver kill
 	screen -wipe
+	echo "Press ENTER To Return"
+	read continue
+	main_menu
+}
+
+
+option_x1() {
+	echo "Fixing grin.toml"
+	sed -i -e $'s/\[server\]/\[server\]\\\narchive_mode = false/g' $HOME/mw/grin/grin.toml
+	sed -i -e $'s/\[server\]/\[server\]\\\narchive_mode = false/g' $HOME/mw/grin/node1/grin.toml
+	sed -i -e $'s/\[server\]/\[server\]\\\narchive_mode = false/g' $HOME/mw/grin/server/grin.toml
+	
 	echo "Press ENTER To Return"
 	read continue
 	main_menu

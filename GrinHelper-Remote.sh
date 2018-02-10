@@ -106,8 +106,8 @@ option_u() {
 		ssh ${names[1]} "sudo wget -q $UpdateURL1 -O /bin/grinhelper; 
 		sudo chmod +x /bin/grinhelper;
 		if [ ! -f "/bin/GrinHelper" ]; then sudo ln -s /bin/grinhelper /bin/GrinHelper; fi;
-		sudo wget -q $UpdateURL1 -O /bin/GrinHelper-CheckRemoteNodes;
-		sudo chmod +x /bin/GrinHelper-CheckRemoteNodes"
+		sudo wget -q $UpdateURL2 -O /bin/GrinHelper-Remote;
+		sudo chmod +x /bin/GrinHelper-Remote"
 		echo "Finished updating Grinhelper at ${names[2]}"
 
 	done
