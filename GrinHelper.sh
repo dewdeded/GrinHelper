@@ -306,13 +306,13 @@ option_c2() {
 	if netstat -an | grep -q "13414"; then echo "Standard port 13414 is open."; else echo "Standard port 13414 is NOT open."; fi
 	if netstat -an | grep -q "13415"; then echo "Standard port 13415 is open."; else echo "Standard port 13415 is NOT open."; fi
 	export myip=`curl -s icanhazip.com`
-	echo "Checking if port 13413 is publicly reachable."
+	echo -e "\nChecking if port 13413 is publicly reachable."
 	nc -w 2 $myip 13413 </dev/null;
 	if [ "$?" == "0" ]; then echo Success, port 13413 is reachable.; else echo Fail, port 13413 is NOT reachable.; fi
-	echo "Checking if port 13414 is publicly reachable."
+	echo -e "\nChecking if port 13414 is publicly reachable."
 	nc -w 2 $myip 13414 </dev/null;
 	if [ "$?" == "0" ]; then echo Success, port 13414 is reachable.; else echo Fail, port 13414 is NOT reachable.; fi
-	echo "Checking if port 13415 is publicly reachable."
+	echo -e "\nChecking if port 13415 is publicly reachable."
 	nc -w 2 $myip 13415 </dev/null;
 	if [ "$?" == "0" ]; then echo Success, port 13415 is reachable.; else echo Fail, port 13415 is NOT reachable.; fi
 

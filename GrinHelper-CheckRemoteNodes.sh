@@ -71,6 +71,31 @@ option_3() {
 }
 
 # Function Update Grinhelper
+option_4() {
+	clear
+
+	for host in "${hosts[@]}"; do
+		IFS=":" names=($host)
+		echo -e "\n\033[0;35mChecking ports at Hostname: ${names[2]} (IP: ${names[1]})\033[0m\n"
+	   
+	    echo -e "Checking if port 13413 at ${names[2]} is publicly reachable."
+		result_test=$(timeout 2 bash -c "</dev/tcp/${names[1]}/13413" 2>&1)
+		if [ "$?" == "0" ]; then echo -e "\033[0;32mSuccess, port 13413 is reachable.\033[0m"; else echo -e "\033[0;31mFail, port 13413 is NOT reachable.\033[0m"; fi
+		
+		echo -e "\nChecking if port 13414 at ${names[2]} is publicly reachable."
+		result_test=$(timeout 2 bash -c "</dev/tcp/${names[1]}/13414" 2>&1)
+		if [ "$?" == "0" ]; then echo -e "\033[0;32mSuccess, port 13414 is reachable.\033[0m"; else echo -e "\033[0;31mFail, port 13414 is NOT reachable.\033[0m"; fi
+		
+		echo -e "\nChecking if port 13415 at ${names[2]} is publicly reachable."
+		result_test=$(timeout 2 bash -c "</dev/tcp/${names[1]}/13415" 2>&1)
+		if [ "$?" == "0" ]; then echo -e "\033[0;32mSuccess, port 13415 is reachable.\033[0m"; else echo -e "\033[0;31mFail, port 13415 is NOT reachable.\033[0m"; fi
+	done
+
+	echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
+	read continue
+}
+
+# Function Update Grinhelper
 option_u() {
 	clear
 
@@ -102,6 +127,7 @@ while :; do
 	echo "1) Check Sync & Mining Stats"
 	echo "2) Check Outputs"
 	echo "3) Check Balance"
+	echo "4) Check Connectivity (ports reachable)"
 	echo ""
 	echo "u) Update Grinhelper"
 	echo "e) Exit"
@@ -115,6 +141,7 @@ while :; do
 	1) option_1 ;;
 	2) option_2 ;;
 	3) option_3 ;;
+	4) option_4 ;;
 	u) option_u ;;
 	e) exit 0 ;;
 	*)
