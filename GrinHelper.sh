@@ -51,7 +51,7 @@ clang_installer() {
 ## Installer Grin
 main_installer() {
 	while true; do
-		read -p "Do you wish to install Grin? " yn
+		read -p "Rust not found. Do you wish to install Grin? " yn
 		case $yn in
 		[Yy]*) break ;;
 		[Nn]*) exit ;;
@@ -68,9 +68,10 @@ main_installer() {
 	git checkout milestone/testnet1
 	source $HOME/.cargo/env
 	cargo build --verbose
-	mkdir node1 server
+	mkdir node1 server server/testnet2
 	cp grin.toml node1/
 	cp grin.toml server/
+	#cp grin.toml server/testnet2
 	main_menu
 }
 
@@ -91,13 +92,28 @@ my_wallet() {
 ## Starter Mining Server
 my_mining_server() {
 	cd $HOME/mw/grin/server
+	sed -i '/chain_type/c\chain_type = "Testnet1"' grin.toml
+	sed -i '/db_root/c\db_root = ".grin"' grin.toml
 	export PATH=$HOME/mw/grin/target/debug/:$PATH
 	grin server -m run
 }
 
+
+## Starter Mining Server Testnet 2
+my_mining_server_testnet2() {
+	cd $HOME/mw/grin/server
+	sed -i '/chain_type/c\chain_type = "Testnet2"' grin.toml
+	sed -i '/db_root/c\db_root = ".grin-testnet"' grin.toml
+	export PATH=$HOME/mw/grin/target/debug/:$PATH
+	grin server -m run
+}
+
+
 ## Starter Nonmining Server
 my_nonmining_server() {
 	cd $HOME/mw/grin/server
+	sed -i '/chain_type/c\chain_type = "Testnet1"' grin.toml
+	sed -i '/db_root/c\db_root = ".grin"' grin.toml
 	export PATH=$HOME/mw/grin/target/debug/:$PATH
 	grin server run
 }
@@ -152,9 +168,10 @@ main_menu() {
 	#	figlet -f small "$host"
 
 		echo -e "\033[0;33mGrinhelper Suite @ $host:\033[0m \033[31mMain Menu\033[0m\n"
-		echo "1) Grin Wallet Server (Start detached)"
-		echo "2) Grin Mining Node (Start detached)"
-		echo "3) Grin Non-mining Node (Start detached)"
+		echo "1) Grin Wallet Server (Testnet1)"
+		echo "2a) Grin Mining Node (Testnet1)"
+		echo "2b) Grin Mining Node (Testnet2)"
+		echo "3) Grin Non-mining Node (Testnet1)"
 		echo " "
 		echo "4) View Wallet logfile"
 		echo "5) View Node logfile"
@@ -173,13 +190,14 @@ main_menu() {
 		echo "u2) Update Grindhelper"
 		echo " "
 		echo "e) Exit"
-		echo "====================================="
+		echo ""
 		read -rep $'Please select an option: ' m_menu
 
 		case "$m_menu" in
 
 		1) option_1 ;;
-		2) option_2 ;;
+		2a) option_2a ;;
+		2b) option_2b ;;
 		3) option_3 ;;
 		4) option_4 ;;
 		5) option_5 ;;
@@ -209,11 +227,19 @@ option_1() {
 	screen -dm -S grinwallet /bin/grinhelper my_wallet
 }
 
-option_2() {
+option_2a() {
 	##export function, run a new shell starting the server
 	export -f my_mining_server
 	screen -dm -S grinserver /bin/grinhelper my_mining_server
 }
+
+
+option_2b() {
+	##export function, run a new shell starting the server
+	export -f my_mining_server_testnet2
+	screen -dm -S grinserver /bin/grinhelper my_mining_server_testnet2
+}
+
 
 option_3() {
 	##export function, run a new shell starting the server
@@ -336,8 +362,7 @@ option_u1() {
 	echo "New grin.toml deployed. Old grin.toml backupped."
 	echo -e "\nPress ENTER To Return"
 	read continue
-	/bin/grinhelper
-	exit 0
+	main_menu
 }
 
 
