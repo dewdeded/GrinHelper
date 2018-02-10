@@ -8,7 +8,9 @@
 PathGrinServerLogFile=$HOME/mw/grin/server/grin.log
 # Setup path to Grin wallet logfile
 PathGrinWalletLogFile=$HOME/mw/grin/node1/grin.log
-
+# Update URLs
+UpdateURL1="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh"
+UpdateURL2="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper-Remote.sh"
 # Max logfile size
 MaxLogSize=100M
 
@@ -417,8 +419,11 @@ option_u1() {
 
 option_u2() {
 	echo "Updating"
-	wget -q https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O /bin/grinhelper
-	chmod +x /bin/grinhelper
+	sudo wget -q $UpdateURL1 -O /bin/grinhelper; 
+	sudo chmod +x /bin/grinhelper;
+	if [ ! -f "/bin/GrinHelper" ]; then sudo ln -s /bin/grinhelper /bin/GrinHelper; fi;
+	sudo wget -q $UpdateURL2 -O /bin/GrinHelper-Remote;
+	sudo chmod +x /bin/GrinHelper-Remote"
 	clear
 	echo "Grinhelper update successful"
 	echo "Press ENTER To Return"
