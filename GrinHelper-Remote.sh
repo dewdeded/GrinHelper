@@ -11,6 +11,12 @@ BaseDir="/root/mw"
 RustDir="~/.cargo/bin"
 
 #### Begin main script ####
+	if [ ! -f ./GrinHelper-NodeList.conf ]; then echo "Not found." 
+	exit
+	fi
+
+
+#### Begin main script ####
 source "$ConfigFile"
 
 # Function Check Stats
@@ -128,7 +134,7 @@ while :; do
 	echo "=========================================================================="
 	figlet -f small -f small GrinHelper Suite
 	figlet -f small -f small Check Remote Nodes
-	echo -e "All functions, will be executed on all your Grin nodes."
+	echo -e "All functions, will be executed on all your Grin nodes.\n"
 	echo "1) Check Sync & Mining Stats"
 	echo "2) Check Outputs"
 	echo "3) Check Balance"
