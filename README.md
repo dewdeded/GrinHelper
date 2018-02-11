@@ -5,7 +5,7 @@ Grin is an in-progress implementation of the MimbleWimble protocol. To learn mor
 ## Installation instructions
 
 1. Get yourself a clean Ubuntu or Debian (tested working on Ubuntu 16.04 LTS minimal)
-2. Run these commands
+2. Run this command in a terminal
 
 ```bash
 wget --no-check-certificate --quiet 'https://raw.githubusercontent.com/dewdeded/GrinHelper/master/Install.sh' > /dev/null 2> /dev/null && bash Install.sh
