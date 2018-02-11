@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# https://bjornjohansen.no/encrypt-file-using-ssh-key
+
 export pw=`< /dev/urandom tr -dc A-Za-z0-9 | head -c20; echo`
 
 ssh-keygen -C "$pw@gr.in" -t rsa -N '' -f ~/.ssh/anonsend-$pw > /dev/null

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# https://bjornjohansen.no/encrypt-file-using-ssh-key
+
 key="BPqh04thV5k22jjekPuQ"
 
 ### Tor2Web-Proxies
