@@ -30,8 +30,10 @@ while true ; do
 		esac
 done
 
+echo -e "\nRemoving install script."
+rm -f Install.sh
+
 echo -e "\n\nIf you like Camel Case notation, add these aliases for GrinHelper for more convenience.\n"
 echo "echo \"alias grinhelper=GrinHelper\" >> ~/.bashrc"
 echo "echo \"alias GrinHelper-Remote=grinhelper-remote\" >> ~/.bashrc"
 echo -e "\n\n"
-rm -f Install.sh
