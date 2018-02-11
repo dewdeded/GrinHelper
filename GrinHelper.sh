@@ -1,9 +1,11 @@
 #!/bin/bash
 
-#### Direct Download ####
-# wget https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper.sh -O /bin/grinhelper; chmod +x /bin/grinhelper
+#### Direct install ####
+# wget --no-check-certificate --quiet 'https://raw.githubusercontent.com/dewdeded/GrinHelper/master/Install.sh' > /dev/null 2> /dev/null && bash Install.sh
 
-#### Configuration ####
+#############################################################
+#### Configuration ##########################################
+#############################################################
 # Setup path to Grin server logfile
 PathGrinServerLogFile=$HOME/mw/grin/server/grin.log
 # Setup path to Grin wallet logfile
@@ -13,10 +15,12 @@ UpdateURL1="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHel
 UpdateURL2="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper-Remote.sh"
 # Max logfile size
 MaxLogSize=100M
-
 #############################################################
 
-#### Function definition ####
+#############################################################
+#### Function definitions ###################################
+#############################################################
+
 ## Installer Rust
 rust_installer() {
 	while true; do

@@ -52,6 +52,11 @@ This is what this script will do for you.
 - Update GrindHelper
 - Update Grin (to latest version in master-branch.)
 
+#### Extras
+
+- Small fixes for current master (e.g. missing/wrong entries grin.toml)
+- More to come
+
 ## GrinHelper-Remote.sh
 
 This script manages, monitors and aggregate status info from remote Grin nodes.
