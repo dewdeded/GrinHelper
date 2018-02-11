@@ -34,3 +34,4 @@ echo -e "\n\nIf you like Camel Case notation, add these aliases for GrinHelper f
 echo "echo \"alias grinhelper=GrinHelper\" >> ~/.bashrc"
 echo "echo \"alias GrinHelper-Remote=grinhelper-remote\" >> ~/.bashrc"
 echo -e "\n\n"
+rm -f Install.sh
