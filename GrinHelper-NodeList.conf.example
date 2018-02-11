@@ -3,10 +3,10 @@
 # Config your grin nodes here
 
 hosts=(
-1:104.xx.118.yyy:1.grin.xxx:testnet1
-2:154.xx.245.yyy:2.grin.xxx:testnet1
-3:154.xx.245.yyy:3.grin.xxx:testnet1
-4:204.xx.91.yyy:5.grin.xxx:testnet2
-5:13.xx.166.yyy:GrinBench1:testnet2
-6:40.xx.228.yyy:GrinBench2:testnet2
+1:101.xx.111.yyy:1.grin.tld:testnet1
+2:102.xx.222.yyy:2.grin.tld:testnet1
+3:103.xx.333.yyy:3.grin.tld:testnet1
+4:201.xx.111.yyy:5.grin.tld:testnet2
+5:202.xx.222.yyy:GrinBench1.local:testnet2
+6:203.xx.333.yyy:GrinBench2.local:testnet2
 )
