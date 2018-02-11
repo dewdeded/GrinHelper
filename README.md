@@ -8,7 +8,7 @@ Grin is an in-progress implementation of the MimbleWimble protocol. To learn mor
 2. Run these commands
 
 ```bash
-curl https://raw.githubusercontent.com/dewdeded/GrinHelper/master/Install.sh -sSf | bash
+wget -q https://raw.githubusercontent.com/dewdeded/GrinHelper/master/Install.sh 2>&1 | grep "^wget:" && bash Install.sh; rm -f Install.sh
 ```
 
 ## GrinHelper.sh
