@@ -9,9 +9,11 @@ UpdateURL1="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHel
 UpdateURL2="https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper-CheckRemoteNodes.sh"
 BaseDir="/root/mw"
 RustDir="~/.cargo/bin"
+NodeListLocation="./GrinHelper-NodeList.conf"
 
 #### Begin main script ####
-	if [ ! -f ./GrinHelper-NodeList.conf ]; then echo "Not found." 
+	if [ ! -f $NodeListLocation ]; then echo "GrinHelper-NodeList.conf not found. Creating now, please edit." 
+	wget --no-check-certificate --quiet 'https://raw.githubusercontent.com/dewdeded/GrinHelper/master/GrinHelper-NodeList.conf.example' -O GrinHelper-NodeList.conf > /dev/null 2> /dev/null
 	exit
 	fi
 
