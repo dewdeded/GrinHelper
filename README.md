@@ -1,7 +1,7 @@
 # GrinHelper Suite - Bash Script Repository
 
 Grin is an in-progress implementation of the MimbleWimble protocol. To learn more, read the [introduction to MimbleWimble and Grin](https://github.com/mimblewimble/grin/blob/master/doc/intro.md).
-Our repository hosts standard scripts for building, deploying, running, monitoring Grin nodes and analyses across and within a therapeutic area, as well as for mining. Our goal is to standardize workflows and code across the community, and to provide examples of how Grin can build upon standardized existing technology. We aim to establish this repository as the place to collaborate and share between devs, operators and users
+Our repository hosts standard scripts for building, deploying, running and monitoring Grin nodes and analyses performance, as well as for mining. Our goal is to standardize workflows and code across the community, and to provide examples of how Grin can build upon standardized existing technology. We aim to establish this repository as the place to collaborate and share between devs, operators and users
 
 
 ## Installation instructions
