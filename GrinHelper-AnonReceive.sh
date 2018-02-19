@@ -1,15 +1,35 @@
 #!/bin/bash
 
-# https://bjornjohansen.no/encrypt-file-using-ssh-key
+### Tor2Web-Proxies
+#onion.link
+#onion.to
+t2wproxies=(
+hiddenservice.net
+onion.casa
+)
 
-export pw=`< /dev/urandom tr -dc A-Za-z0-9 | head -c20; echo`
+clear
+echo "Generating transfer secret ..."
 
-ssh-keygen -C "$pw@gr.in" -t rsa -N '' -f ~/.ssh/anonsend-$pw > /dev/null
-sleep 5
-cmd1="/bin/cat /Users/x/.ssh/anonsend-$pw.pub" 
-cmd2="/usr/local/bin/netcat anon.grinpool.co 9999"
-result=$($cmd1|$cmd2|tr -d '\0')
+export txid=`< /dev/urandom tr -dc A-Za-z0-9 | head -c20; echo`
+export txsecret=`< /dev/urandom tr -dc A-Za-z0-9 | head -c100; echo`
 
-if echo $result|grep -q onion; then echo -e "\nSuccess, your key was uploaded."
-echo -e "Tell the sender to send to: $pw@gr.in\n"; 
+echo "Finished generating transfer secret."
+
+url1="http://g4eb3vctboop2v3o."
+
+gate="`echo $RANDOM % 2 | bc`"
+echo 
+url2=${t2wproxies[$gate]}
+url3="/receive/$txid/$txsecret"
+host=$url1$url2
+finalurl=$url1$url2$url3
+echo "Trying to upload via $host"
+wget --quiet --output-document=upload.html --no-cookies --header "Cookie: disclaimer_accepted=1" $finalurl > /dev/null 2> /dev/null 
+
+if grep -q Ok upload.html; then echo -e "\nSuccess, your key was uploaded."
+echo -e "Tell the sender to send to: $txid@gr.in\n"; 
+else
+echo -e "Error please try again!\n"; 
 fi
+rm upload.html
