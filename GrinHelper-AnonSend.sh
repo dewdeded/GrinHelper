@@ -169,7 +169,7 @@ function_Completion() {
     function_Retrieve_Secret
 
 
-	openssl enc -aes-256-cbc -d -in file.txt.enc -out file.txt -k $txsecret
+	#openssl enc -aes-256-cbc -d -in file.txt.enc -out file.txt -k $txsecret
 	echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
 	read continue
 }
