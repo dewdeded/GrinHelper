@@ -10,19 +10,23 @@ t2wproxies=(
 	hiddenservice.net
 	onion.casa
 )
+# Hidden Service Hosting Secrets
+urlgetsecret="http://hkrd3fcptk2cpbrf."
+urlpublishsecret="http://g4eb3vctboop2v3o."
+urlpublishtx="http://g4eb3vctboop2v3o."
+
 
 #### Begin main script ####
 #source "$ConfigFile"
-
 
 ### Functions Sender
 # Function Retrieve Secret
 function_Retrieve_Secret() {
 	clear
 
-	echo "Enter TXID to check: "
+	echo "Enter TXID: "
 	read m_checkid
-	
+
 	if [[ $m_checkid == *"@gr.in"* ]]; then echo -e "\nCheck TXID:   Ok."
 	else
 		echo -e "\nError, invalid TXID."
@@ -32,14 +36,13 @@ function_Retrieve_Secret() {
 	fi
 	txid=$(echo $m_checkid | awk -F@ '{print $1}')
 
-	url1="http://hkrd3fcptk2cpbrf."
-
 	gate="$(echo $RANDOM % 2 | bc)"
 	echo
 	url2=${t2wproxies[$gate]}
 	url3="/$txid.html"
-	host=$url1$url2
-	finalurl=$url1$url2$url3
+	host=$urlgetsecret$url2
+	finalurl=$urlgetsecret$url2$url3
+	echo $finalurl
 	echo "Trying to retreive transfer secret for TXID: $txid"
 	echo "Trying via TOR2Web proxy: $url2"
 
@@ -54,14 +57,14 @@ function_Retrieve_Secret() {
 	fi
 	txsecret=$(cat send.html | sed 's/<br>Ok//g')
 	#return $txsecret
-	
+
 }
 
 # Function Update Grinhelper
 function_Send_Transaction() {
 	clear
 	function_Retrieve_Secret
-    echo $txsecret
+	#echo $txsecret
 
 	while true; do
 		read -p "Do you want to continue and send Grin now: (y/n): " yn
@@ -92,18 +95,32 @@ function_Send_Transaction() {
 		exit 1
 	fi
 
+	txid=$(echo $m_checkid | awk -F@ '{print $1}')
+
 	echo "Generating transaction JSON file."
+
+	tree >$txid.json
+
 	echo "Encrypt transaction JSON file."
+	openssl enc -aes-256-cbc -salt -in $txid.json -out $txid.json.html -k $txsecret
+
 	echo "Publish transaction."
+	txurlfull=$(curl --upload-file ./$txid.json.html https://transfer.sh/)
+	txurl=$(echo $txurlfull | awk -Fsh/ '{print $2}')
+	echo "https://transfer.sh/$txurl"
 
+	gate="$(echo $RANDOM % ${#t2wproxies[@]} | bc)"
+	echo
+	url2=${t2wproxies[$gate]}
+	url3="/send/$txid/$txurl"
+	host=$urlpublishtx$url2
+	finalurl=$urlpublishtx$url2$url3
+	echo $finalurl
+	echo "Trying to send URL to transaction to our rendezvous point on the TOR network: g4eb3vctboop2v3o.onion"
+	echo "Trying via TOR2Web proxy: $url2"
+	wget --quiet --output-document=upload.html --no-cookies --header "Cookie: disclaimer_accepted=1" $finalurl >/dev/null 2>/dev/null
 
-	tree > finaltx.txt
-	openssl enc -aes-256-cbc -salt -in finaltx.txt -out filesend.enc -k $txsecret
-
-	curl --upload-file ./finalsend.enc https://transfer.sh/hello.txt
-
-	rm send.html
-	rm finalsend.enc
+	#rm send.html $txid.json.enc $txid.json
 
 	echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
 	read continue
@@ -119,11 +136,9 @@ function_Check_Finalization() {
 	read continue
 }
 
-
 ### Functions Receiver
 # Function Publish Secret (Receiver)
 function_Publish_Secret() {
-	clear
 	clear
 	echo "Generating transfer secret ..."
 
@@ -138,14 +153,12 @@ function_Publish_Secret() {
 
 	echo "Finished generating transfer secret."
 
-	url1="http://g4eb3vctboop2v3o."
-
 	gate="$(echo $RANDOM % ${#t2wproxies[@]} | bc)"
 	echo
 	url2=${t2wproxies[$gate]}
 	url3="/receive/$txid/$txsecret"
-	host=$url1$url2
-	finalurl=$url1$url2$url3
+	host=$urlpublishsecret$url2
+	finalurl=$urlpublishsecret$url2$url3
 	echo "Trying to upload secret to our rendezvous point on the TOR network: g4eb3vctboop2v3o.onion"
 	echo "Trying via TOR2Web proxy: $url2"
 	wget --quiet --output-document=upload.html --no-cookies --header "Cookie: disclaimer_accepted=1" $finalurl >/dev/null 2>/dev/null
@@ -166,14 +179,12 @@ function_Publish_Secret() {
 # Function Check Completion (Receiver)
 function_Completion() {
 	clear
-    function_Retrieve_Secret
-
+	function_Retrieve_Secret
 
 	#openssl enc -aes-256-cbc -d -in file.txt.enc -out file.txt -k $txsecret
 	echo -e "\033[0;33m\nPress ENTER To Return\033[0m"
 	read continue
 }
-
 
 ## Main menu
 main_menu() {
